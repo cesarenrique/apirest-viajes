@@ -37,6 +37,7 @@ class TrayectoTransformer extends TransformerAbstract
           'NIF'=>(string)$Trayecto->NIF,
           'empresa'=> (string)$Trayecto->empresa,
           'LocalidadIdentificador'=>(int)$Trayecto->Localidad_id,
+          'DestinoIdentificador'=>(int)$Trayecto->Localidad_destino_id,
           'fechaCreacion'=>(string)$Trayecto->created_at,
           'fechaActualizacion'=>(string)$Trayecto->updated_at,
           'fechaEliminacion'=>isset($Trayecto->deleted_at) ?(string)$Trayecto->deteted_at: null,

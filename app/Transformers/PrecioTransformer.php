@@ -35,8 +35,8 @@ class PrecioTransformer extends TransformerAbstract
         return [
           'identificador'=>(int)$Precio->id,
           'precio'=> (string)$Precio->precio,
-          'SeguroIdentificador'=>(int)$Precio->Pension_id,
-          'TipoAsientoIdentificador'=>(int)$Precio->tipo_habitacion_id,
+          'SeguroIdentificador'=>(int)$Precio->Seguro_id,
+          'TipoAsientoIdentificador'=>(int)$Precio->tipo_asiento_id,
           'TemporadaIdentificador'=>(int)$Precio->Temporada_id,
           'fechaCreacion'=>(string)$Precio->created_at,
           'fechaActualizacion'=>(string)$Precio->updated_at,

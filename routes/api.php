@@ -39,7 +39,7 @@ Route::resource('tipo_asientos.asientos',TipoAsientoAsientoController::class,['o
 Route::get('temporadas/{Trayecto}/pertenece','TemporadaController@pertenece')->name('temporada.pertenece');
 Route::get('temporadas/{Trayecto}/puedeReservarse','TemporadaController@puedeReservarse')->name('temporada.puedeReservarse');
 Route::resource('temporadas',TemporadaController::class,['except'=>['create','edit','update']]);
-Route::get('trayectos/{Trayecto}/Precios/descriptivo','TrayectoPrecioController@descriptivo')->name('trayectos.precios.descriptivo');
+Route::get('trayectos/{Trayecto}/precios/descriptivo','TrayectoPrecioController@descriptivo')->name('trayectos.precios.descriptivo');
 Route::get('precios/{Precio}/descriptivo','PrecioController@descriptivo')->name('precios.descriptivo');
 Route::resource('precios',PrecioController::class,['except'=>['create','edit','store']]);
 Route::get('trayectos/{Trayecto}/precios/generar','TrayectoPrecioController@generar')->name('trayectos.precios.generar');
@@ -54,8 +54,8 @@ Route::resource('clientes.tarjetas',ClienteTarjetaController::class,['except'=>[
 Route::resource('reservas',ReservaController::class,['except'=>['create','edit']]);
 Route::resource('clientes.reservas',ClienteReservaController::class,['except'=>['create','edit','store','update','destroy']]);
 Route::resource('trayectos.reservas',TrayectoReservaController::class,['except'=>['create','edit','store','update','destroy']]);
-Route::get('asientos/{Asiento}/fechas/libre','AsientoFechaController@libre')->name('Asientos.fechas.libre');
-Route::get('asientos/{Asiento}/fechas/ocupado','AsientoFechaController@ocupado')->name('Asientos.fechas.ocupado');
+Route::get('asientos/{Asiento}/fechas/libre','AsientoFechaController@libre')->name('asientos.fechas.libre');
+Route::get('asientos/{Asiento}/fechas/ocupado','AsientoFechaController@ocupado')->name('asientos.fechas.ocupado');
 Route::resource('asientos.fechas',AsientoFechaController::class,['except'=>['create','edit','store','update','destroy']]);
 Route::resource('asientos.reservas',AsientoReservaController::class,['except'=>['create','edit','store','update','destroy']]);
 Route::resource('asientos.precios',AsientoPrecioController::class,['except'=>['create','edit','store','update','destroy']]);
