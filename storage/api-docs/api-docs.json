@@ -1,0 +1,4464 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "API REST Hoteles",
+        "description": "API REST Hoteles",
+        "contact": {
+            "email": "cesarpozo25@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "host": "localhost/apirest-hoteles/public/",
+    "basePath": "",
+    "paths": {
+        "/alojamientos": {
+            "get": {
+                "summary": "Get Alojamientos",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Alojamiento"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/alojamientos/{alojamiento_id}": {
+            "get": {
+                "summary": "Show one Alojamiento",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "alojamiento_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Alojamiento"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "Update Alojamientos",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "alojamiento_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "precio": {
+                                    "type": "string",
+                                    "example": "299.99"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Alojamiento"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete Alojamientos",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "alojamiento_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Alojamiento"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/clientes": {
+            "get": {
+                "summary": "Get Clientes",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Cliente"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create Cliente for store",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "nombre": {
+                                    "type": "string",
+                                    "example": "nombre apellido"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "nombre@gmail.com"
+                                },
+                                "NIF": {
+                                    "type": "string",
+                                    "example": "12345678Z"
+                                },
+                                "telefono": {
+                                    "type": "string",
+                                    "example": "666777888"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Cliente"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/clientes/{cliente_id}": {
+            "get": {
+                "summary": "Get Cliente",
+                "parameters": [
+                    {
+                        "name": "cliente_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Cliente"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "Update Cliente",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "cliente_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "properties": {
+                                "nombre": {
+                                    "type": "string",
+                                    "example": "nombre apellido"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "nombre@gmail.com"
+                                },
+                                "NIF": {
+                                    "type": "string",
+                                    "example": "12345678Z"
+                                },
+                                "telefono": {
+                                    "type": "string",
+                                    "example": "666777888"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Cliente"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete Cliente",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "cliente_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Cliente"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/clientes/{cliente_id}/reservas": {
+            "get": {
+                "summary": "Get Clientes Reservas",
+                "parameters": [
+                    {
+                        "name": "cliente_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Reserva"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/clientes/{cliente_id}/tarjetas": {
+            "get": {
+                "summary": "Get Clientes Reservas",
+                "parameters": [
+                    {
+                        "name": "cliente_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Tarjeta"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/habitacions/{habitacion_id}/alojamientos": {
+            "get": {
+                "summary": "Get Habitacion table Alojamientos",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "habitacion_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Alojamiento"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/habitacions": {
+            "get": {
+                "summary": "Get Habitaciones",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Habitacion"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create Habitacion for store",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "numero": {
+                                    "type": "string",
+                                    "example": "120"
+                                },
+                                "Hotel_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "tipo_habitacions": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Habitacion"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "406": {
+                        "description": "Not Aceptable",
+                        "schema": {
+                            "$ref": "#definitions/Errors406"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/habitacions/{habitacion_id}": {
+            "get": {
+                "summary": "Get Habitacion",
+                "parameters": [
+                    {
+                        "name": "habitacion_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Habitacion"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "Update Habitacion",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "habitacion_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "properties": {
+                                "numero": {
+                                    "type": "string",
+                                    "example": "120"
+                                },
+                                "Hotel_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "tipo_habitacions": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Habitacion"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "406": {
+                        "description": "Not Aceptable",
+                        "schema": {
+                            "$ref": "#definitions/Errors406"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete Habitacion",
+                "parameters": [
+                    {
+                        "name": "habitacion_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Habitacion"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/habitacions/{habitacion_id}/fechas": {
+            "get": {
+                "summary": "Get Habitacion table All Fechas",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "habitacion_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Fecha"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/habitacions/{habitacion_id}/fechas/libre": {
+            "get": {
+                "summary": "Get Habitacion table All Fechas",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "habitacion_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fecha_desde",
+                        "in": "query",
+                        "description": "una fecha de comienzo",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fecha_hasta",
+                        "in": "query",
+                        "description": "una fecha de fin",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Fecha"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/habitacions/{habitacion_id}/fechas/ocupado": {
+            "get": {
+                "summary": "Get Habitacion table All Fechas",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "habitacion_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fecha_desde",
+                        "in": "query",
+                        "description": "una fecha de comienzo",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fecha_hasta",
+                        "in": "query",
+                        "description": "una fecha de fin",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Fecha"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/habitacions/{habitacion_id}/reservas": {
+            "get": {
+                "summary": "Get Habitacion All Reservas",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "habitacion_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Reservas"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/hotels/{hotel_id}/alojamientos": {
+            "get": {
+                "summary": "Get Hoteles table Alojamientos",
+                "parameters": [
+                    {
+                        "name": "hotel_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Alojamiento"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/hotets": {
+            "get": {
+                "summary": "Get Hoteles",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Hotel"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/hotels": {
+            "post": {
+                "summary": "Create Hotel for store",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "nombre": {
+                                    "type": "string",
+                                    "example": "nombre apellido"
+                                },
+                                "NIF": {
+                                    "type": "string",
+                                    "example": "12345678Z"
+                                },
+                                "Localidad_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Hotel"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/hotels/{hotel_id}": {
+            "get": {
+                "summary": "Get Hotel",
+                "parameters": [
+                    {
+                        "name": "hotel_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Hotel"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "Update hotel",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "hotel_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "properties": {
+                                "nombre": {
+                                    "type": "string",
+                                    "example": "nombre apellido"
+                                },
+                                "NIF": {
+                                    "type": "string",
+                                    "example": "12345678Z"
+                                },
+                                "Localidad_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Update successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Hotel"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete hotel",
+                "parameters": [
+                    {
+                        "name": "hotel_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Hotel"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/hotels/{hotel_id}/fechas": {
+            "get": {
+                "summary": "Get Hoteles table fechas",
+                "parameters": [
+                    {
+                        "name": "hotel_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Fecha"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/hotels/{hotel_id}/habitacions": {
+            "get": {
+                "summary": "Get Hoteles  habitaciones",
+                "parameters": [
+                    {
+                        "name": "hotel_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Habitacion"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/hotels/{hotel_id}/pensions": {
+            "get": {
+                "summary": "Get Hoteles Pensiones",
+                "parameters": [
+                    {
+                        "name": "hotel_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Pension"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/hotels/{hotel_id}/reservas": {
+            "get": {
+                "summary": "Get Hoteles  reservas",
+                "parameters": [
+                    {
+                        "name": "hotel_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Reservas"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/hotels/{hotel_id}/tipo_habitacions": {
+            "get": {
+                "summary": "Get Hoteles tipos habitaciones",
+                "parameters": [
+                    {
+                        "name": "hotel_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/TipoHabitacion"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/localidads": {
+            "get": {
+                "summary": "Get Localidades",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Localidad"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/localidads/{localidad_id}": {
+            "get": {
+                "summary": "Get Localidad",
+                "parameters": [
+                    {
+                        "name": "localidad_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Localidad"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/localidads/{localidad_id}/hotels": {
+            "get": {
+                "summary": "Get Localidad Hotels",
+                "parameters": [
+                    {
+                        "name": "localidad_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Hotel"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/pais": {
+            "get": {
+                "summary": "Get Paises",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Pais"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/pais/{pais_id}": {
+            "get": {
+                "summary": "Get Pais",
+                "parameters": [
+                    {
+                        "name": "pais_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Pais"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/pais/{pais_id}/hotels": {
+            "get": {
+                "summary": "Get Pais Hotels",
+                "parameters": [
+                    {
+                        "name": "pais_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Hotel"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/pensions": {
+            "get": {
+                "summary": "Get Pensiones",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Pension"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create Pension for store",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "tipo": {
+                                    "type": "string",
+                                    "example": "Desayuno delux"
+                                },
+                                "Hotel_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Pension"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/pensions/{pension_id}": {
+            "get": {
+                "summary": "Get Pension",
+                "parameters": [
+                    {
+                        "name": "pension_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Pension"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "Update Pension",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "pension_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "properties": {
+                                "tipo": {
+                                    "type": "string",
+                                    "example": "Desayuno delux"
+                                },
+                                "Hotel_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Update successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Pension"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete Pensions",
+                "parameters": [
+                    {
+                        "name": "pension_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Pension"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/provincias": {
+            "get": {
+                "summary": "Get Provincias",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Provincia"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/provincias/{provincia_id}": {
+            "get": {
+                "summary": "Get Provincia",
+                "parameters": [
+                    {
+                        "name": "provincia_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Provincia"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/provincias/{provincia_id}/hotels": {
+            "get": {
+                "summary": "Get Provincia Hotels",
+                "parameters": [
+                    {
+                        "name": "provincia_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Hotel"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/reservas": {
+            "get": {
+                "summary": "Get Reservas",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Reserva"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create Reserva for store",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "tipo": {
+                                    "type": "string",
+                                    "example": "Desayuno delux"
+                                },
+                                "Fecha_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "Habitacion_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "Alojamiento_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "Cliente_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "Tarjeta": {
+                                    "type": "string",
+                                    "example": "1231331313321"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Reserva"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/reservas/{reserva_id}": {
+            "get": {
+                "summary": "Get Reserva",
+                "parameters": [
+                    {
+                        "name": "reserva_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Reserva"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "Update Reserva",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "reserva_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "properties": {
+                                "tipo": {
+                                    "type": "string",
+                                    "example": "Desayuno delux"
+                                },
+                                "Fecha_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "Habitacion_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "Alojamiento_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "Cliente_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "Tarjeta": {
+                                    "type": "string",
+                                    "example": "1231331313321"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Update successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Reserva"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete Reserva",
+                "parameters": [
+                    {
+                        "name": "reserva_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Reserva"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/tarjetas": {
+            "get": {
+                "summary": "Get Tarjetas",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Tarjeta"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create Tarjeta for store",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "Cliente_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "numero": {
+                                    "type": "string",
+                                    "example": "1231331313321"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Tarjeta"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/tarjetas/{tarjeta_id}": {
+            "get": {
+                "summary": "Get Tarjeta",
+                "parameters": [
+                    {
+                        "name": "tarjeta_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Reserva"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "Update Tarjeta",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "tarjeta_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "properties": {
+                                "Cliente_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "numero": {
+                                    "type": "string",
+                                    "example": "1231331313321"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Update successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Reserva"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete Tarjeta",
+                "parameters": [
+                    {
+                        "name": "tarjeta_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Reserva"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/temporadas": {
+            "get": {
+                "summary": "Get Temporadas",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Temporada"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create Tarjeta for store",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "tipo": {
+                                    "type": "string",
+                                    "example": "media"
+                                },
+                                "fecha_desde": {
+                                    "type": "string",
+                                    "example": "2021-01-01"
+                                },
+                                "fecha_hasta": {
+                                    "type": "string",
+                                    "example": "2021-06-01"
+                                },
+                                "Hotel_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Tarjeta"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/temporadas/{tempora_id}": {
+            "get": {
+                "summary": "Get Temporada",
+                "parameters": [
+                    {
+                        "name": "tempora_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Temporada"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "Update Temporada",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "tarjeta_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "properties": {
+                                "tipo": {
+                                    "type": "string",
+                                    "example": "media"
+                                },
+                                "fecha_desde": {
+                                    "type": "string",
+                                    "example": "2021-01-01"
+                                },
+                                "fecha_hasta": {
+                                    "type": "string",
+                                    "example": "2021-06-01"
+                                },
+                                "Hotel_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Update successful operation",
+                        "schema": {
+                            "$ref": "#definitions/Temporada"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete Temporada",
+                "parameters": [
+                    {
+                        "name": "tempora_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Reserva"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/tipo_habitacions": {
+            "get": {
+                "summary": "Get Tipo Habitaciones",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/TipoHabitacion"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create Tipo Habitacion for store",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "tipo": {
+                                    "type": "string",
+                                    "example": "doble"
+                                },
+                                "Hotel_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/TipoHabitacion"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/tipo_habitacions/{tipo_id}": {
+            "get": {
+                "summary": "Get Tipo Habitacion",
+                "parameters": [
+                    {
+                        "name": "tipo_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/TipoHabitacion"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "Update Temporada",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "tarjeta_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "properties": {
+                                "tipo": {
+                                    "type": "string",
+                                    "example": "doble"
+                                },
+                                "Hotel_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Update successful operation",
+                        "schema": {
+                            "$ref": "#definitions/TipoHabitacion"
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete Temporada",
+                "parameters": [
+                    {
+                        "name": "tipo_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/TipoHabitacion"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/tipo_habitacions/{tipo_id}/habitacions": {
+            "get": {
+                "summary": "Get Tipo Habitaciones -> Habitaciones",
+                "parameters": [
+                    {
+                        "name": "Autorization",
+                        "in": "header",
+                        "description": "Bearer {token_access}",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/Habitacion"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Autorization Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors403"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors404"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors500"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/users": {
+            "get": {
+                "summary": "Get Users",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#definitions/User"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create Users for store",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "example": "nombre apellido"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "nombre@gmail.com"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "secret1234E"
+                                },
+                                "password_confirmation": {
+                                    "type": "string",
+                                    "example": "secret1234E"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create successful operation",
+                        "schema": {
+                            "$ref": "#definitions/User"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "summary": "Ver un usuario",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show one User successful operation",
+                        "schema": {
+                            "$ref": "#definitions/User"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "update User",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "example": "nombre apellido"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "nombre@gmail.com"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "secret1234E"
+                                },
+                                "password_confirmation": {
+                                    "type": "string",
+                                    "example": "secret1234E"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update User successful operation",
+                        "schema": {
+                            "$ref": "#definitions/User"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found Exception",
+                        "schema": {
+                            "$ref": "#definitions/Errors"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "update User",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "un numero id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete User successful operation",
+                        "schema": {
+                            "$ref": "#definitions/User"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#definitions/Errors"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Alojamiento": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "precio": {
+                    "type": "string",
+                    "example": "199,99"
+                },
+                "PensionIdentificador": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "TipoHabitacionIdentificador": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "TemporadaIdentificador": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Cliente": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "NIF": {
+                    "type": "string",
+                    "example": "49372889P"
+                },
+                "nombre": {
+                    "type": "string",
+                    "example": "Rosa Vasquez"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "rosa@gmail.com"
+                },
+                "telefono": {
+                    "type": "string",
+                    "example": "677777222"
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Fecha": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "fecha": {
+                    "type": "string",
+                    "example": "2021-10-01"
+                },
+                "HotelIdentificador": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Habitacion": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "numero": {
+                    "type": "string",
+                    "example": "123"
+                },
+                "HotelIdentificador": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Hotel": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "NIF": {
+                    "type": "string",
+                    "example": "12345678Z"
+                },
+                "nombre": {
+                    "type": "string",
+                    "example": "Reynods Hotel"
+                },
+                "LocalidadIdentificador": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Localidad": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "nombre": {
+                    "type": "string",
+                    "example": "Vitoria"
+                },
+                "ProvinciaIdentificador": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Pension": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "tipo": {
+                    "type": "string",
+                    "example": "Solo alojamiento"
+                },
+                "HotelIdentificador": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Provincia": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "nombre": {
+                    "type": "string",
+                    "example": "Vitoria"
+                },
+                "PaisIdentificador": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Pais": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "nombre": {
+                    "type": "string",
+                    "example": "Espa\u00f1a"
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Reserva": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "reservado": {
+                    "type": "string",
+                    "example": "reservado"
+                },
+                "estado": {
+                    "type": "string",
+                    "example": "pagado totalmente"
+                },
+                "pagado": {
+                    "type": "string",
+                    "example": "199,99"
+                },
+                "AlojamientoIdentificador": {
+                    "type": "integer",
+                    "example": 68
+                },
+                "HabitacionIdentificador": {
+                    "type": "integer",
+                    "example": 627
+                },
+                "FechaIdentificador": {
+                    "type": "integer",
+                    "example": 20030
+                },
+                "ClienteIdentificador": {
+                    "type": "integer",
+                    "example": 699
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Tarjeta": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "numero": {
+                    "type": "string",
+                    "example": "21412341241242"
+                },
+                "ClienteIdentificador": {
+                    "type": "integer",
+                    "example": 699
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Temporada": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "tipo": {
+                    "type": "string",
+                    "example": "media"
+                },
+                "fechaInicio": {
+                    "type": "string",
+                    "example": "2021-01-01"
+                },
+                "fechaFin": {
+                    "type": "string",
+                    "example": "2021-06-01"
+                },
+                "HotelIdentificador": {
+                    "type": "integer",
+                    "example": 68
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "TipoHabitacion": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "tipo": {
+                    "type": "string",
+                    "example": "deluxe"
+                },
+                "HotelIdentificador": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "User": {
+            "properties": {
+                "identificador": {
+                    "description": "UUID",
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "nombre apellido"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "abc@gmail.com"
+                },
+                "esVerificado": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "tipo_usuario": {
+                    "type": "string",
+                    "example": "3"
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaActualizacion": {
+                    "type": "string",
+                    "example": "2021-10-11"
+                },
+                "fechaEliminacion": {
+                    "type": "string",
+                    "example": "null"
+                }
+            }
+        },
+        "Errors": {
+            "properties": {
+                "data": {
+                    "description": "mensaje",
+                    "type": "string",
+                    "example": "Error"
+                },
+                "code": {
+                    "type": "Integer",
+                    "example": 404
+                }
+            }
+        },
+        "Errors403": {
+            "properties": {
+                "data": {
+                    "description": "mensaje",
+                    "type": "string",
+                    "example": "unauthenticated"
+                },
+                "code": {
+                    "type": "Integer",
+                    "example": 403
+                }
+            }
+        },
+        "Errors404": {
+            "properties": {
+                "data": {
+                    "description": "mensaje",
+                    "type": "string",
+                    "example": "Not Found Exception"
+                },
+                "code": {
+                    "type": "Integer",
+                    "example": 404
+                }
+            }
+        },
+        "Errors406": {
+            "properties": {
+                "data": {
+                    "description": "mensaje",
+                    "type": "string",
+                    "example": "Not Aceptable clients"
+                },
+                "code": {
+                    "type": "Integer",
+                    "example": 406
+                }
+            }
+        },
+        "Errors500": {
+            "properties": {
+                "data": {
+                    "description": "mensaje",
+                    "type": "string",
+                    "example": "Error Interno"
+                },
+                "code": {
+                    "type": "Integer",
+                    "example": 500
+                }
+            }
+        }
+    }
+}
