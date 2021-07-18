@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\DB;
-use App\Hotel;
-use App\Alojamiento;
+use App\Trayecto;
+use App\Precio;
 use Illuminate\Support\Collection;
 
-class HotelAlojamientoController extends ApiController
+class TrayectoPrecioController extends ApiController
 {
 
     public function __construct(){
@@ -24,13 +24,13 @@ class HotelAlojamientoController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/hotels/{hotel_id}/alojamientos",
+     *   path="/Trayectos/{Trayecto_id}/Precios",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Hoteles table Alojamientos",
+     *   summary="Get Trayectoes table Precios",
      *		  @SWG\Parameter(
-     *          name="hotel_id",
+     *          name="Trayecto_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -46,7 +46,7 @@ class HotelAlojamientoController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Alojamiento")
+     *         @SWG\Items(ref="#definitions/Precio")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -61,16 +61,16 @@ class HotelAlojamientoController extends ApiController
      *)
      *
      **/
-    public function index($Hotel_id)
+    public function index($Trayecto_id)
     {
-      $hotel=Hotel::findOrFail($Hotel_id);
-      $pensiones=$hotel->pensions;
+      $Trayecto=Trayecto::findOrFail($Trayecto_id);
+      $Seguroes=$Trayecto->seguros;
       $previo=collect();
-      foreach($pensiones as $pension){
-        $previo->push($pension->alojamientos);
+      foreach($Seguroes as $Seguro){
+        $previo->push($Seguro->precios);
       }
-      $alojamientos=$previo->collapse();
-      return $this->showAll($alojamientos);
+      $Precios=$previo->collapse();
+      return $this->showAll($Precios);
     }
 
     /**
@@ -145,29 +145,29 @@ class HotelAlojamientoController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function generar($Hotel_id)
+    public function generar($Trayecto_id)
     {
-        $hotel=Hotel::findOrFail($Hotel_id);
-        $alojamientos=DB::select("select p.id 'Pension_id',th.id 'tipo_habitacion_id',t.id 'Temporada_id', p.Hotel_id
-            from pensions p, tipo_habitacions th, temporadas t
-              where p.Hotel_id =t.Hotel_id and th.Hotel_id=t.Hotel_id and p.Hotel_id =th.Hotel_id  and p.Hotel_id=".$hotel->id);
+        $Trayecto=Trayecto::findOrFail($Trayecto_id);
+        $Precios=DB::select("select p.id 'Seguro_id',th.id 'tipo_asiento_id',t.id 'Temporada_id', p.Trayecto_id
+            from Seguros p, tipo_asientos th, temporadas t
+              where p.Trayecto_id =t.Trayecto_id and th.Trayecto_id=t.Trayecto_id and p.Trayecto_id =th.Trayecto_id  and p.Trayecto_id=".$Trayecto->id);
 
 
 
-        foreach ($alojamientos as $alojamiento) {
-            $cantidad=DB::select("select count(*) as 'cantidad' from alojamientos a where a.Pension_id=".$alojamiento->Pension_id." and a.tipo_habitacion_id=".$alojamiento->tipo_habitacion_id." and a.Temporada_id=".$alojamiento->Temporada_id." and a.deleted_at is null");
+        foreach ($Precios as $Precio) {
+            $cantidad=DB::select("select count(*) as 'cantidad' from Precios a where a.Seguro_id=".$Precio->Seguro_id." and a.tipo_asiento_id=".$Precio->tipo_asiento_id." and a.Temporada_id=".$Precio->Temporada_id." and a.deleted_at is null");
 
             if($cantidad[0]->cantidad==0){
-                $cantidad=DB::select("select count(*) as 'cantidad' from alojamientos a where a.Pension_id=".$alojamiento->Pension_id." and a.tipo_habitacion_id=".$alojamiento->tipo_habitacion_id." and a.Temporada_id=".$alojamiento->Temporada_id);
+                $cantidad=DB::select("select count(*) as 'cantidad' from Precios a where a.Seguro_id=".$Precio->Seguro_id." and a.tipo_asiento_id=".$Precio->tipo_asiento_id." and a.Temporada_id=".$Precio->Temporada_id);
                 $precio="99.99";
                 if($cantidad[0]->cantidad==0){
 
 
-                  DB::statement(' Insert into alojamientos (Pension_id,tipo_habitacion_id,Temporada_id,precio) values ('.$alojamiento->Pension_id.','.$alojamiento->tipo_habitacion_id.','.$alojamiento->Temporada_id.','.$precio.')');
+                  DB::statement(' Insert into Precios (Seguro_id,tipo_asiento_id,Temporada_id,precio) values ('.$Precio->Seguro_id.','.$Precio->tipo_asiento_id.','.$Precio->Temporada_id.','.$precio.')');
                 }else{
-                  $cantidad=DB::select("select a.id from alojamientos a where a.Pension_id=".$alojamiento->Pension_id." and a.tipo_habitacion_id=".$alojamiento->tipo_habitacion_id." and a.Temporada_id=".$alojamiento->Temporada_id);
-                  Alojamiento::withTrashed()->find($cantidad[0]->id)->restore();
-                  $encontrado=Alojamiento::findOrFail($cantidad[0]->id);
+                  $cantidad=DB::select("select a.id from Precios a where a.Seguro_id=".$Precio->Seguro_id." and a.tipo_asiento_id=".$Precio->tipo_asiento_id." and a.Temporada_id=".$Precio->Temporada_id);
+                  Precio::withTrashed()->find($cantidad[0]->id)->restore();
+                  $encontrado=Precio::findOrFail($cantidad[0]->id);
                   $encontrado->precio=$precio;
                   $encontrado->save();
                 }
@@ -177,18 +177,18 @@ class HotelAlojamientoController extends ApiController
     }
 
 
-    public function descriptivo($hotel_id){
-       $hotel=Hotel::findOrFail($hotel_id);
-       $alojamientos=DB::select("select a.id 'identificador', precio 'precio', p2.tipo 'pension',
+    public function descriptivo($Trayecto_id){
+       $Trayecto=Trayecto::findOrFail($Trayecto_id);
+       $Precios=DB::select("select a.id 'identificador', precio 'precio', p2.tipo 'Seguro',
           th.tipo 'tipoHabitacion', t.tipo 'temporada', t.fecha_desde, t.fecha_hasta
-          from alojamientos a, pensions p2 ,tipo_habitacions th ,temporadas t
-          where  p2.Hotel_id=th.Hotel_id  and p2.Hotel_id =t.Hotel_id
-          and a.Pension_id =p2.id
-          and a.tipo_habitacion_id =th.id and t.id =a.Temporada_id
-          and p2.Hotel_id =".$hotel->id );
+          from Precios a, Seguros p2 ,tipo_asientos th ,temporadas t
+          where  p2.Trayecto_id=th.Trayecto_id  and p2.Trayecto_id =t.Trayecto_id
+          and a.Seguro_id =p2.id
+          and a.tipo_asiento_id =th.id and t.id =a.Temporada_id
+          and p2.Trayecto_id =".$Trayecto->id );
        $collection = new Collection();
-       foreach($alojamientos as $alojamiento){
-          $collection->push($alojamiento);
+       foreach($Precios as $Precio){
+          $collection->push($Precio);
        }
        return $this->showAll2($collection);
     }

@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Hotel;
-
-class HotelTipoHabitacionController extends ApiController
+use App\Trayecto;
+class TrayectoAsientoController extends ApiController
 {
-
   public function __construct(){
     $this->middleware('client.credentials');
 
@@ -21,13 +19,13 @@ class HotelTipoHabitacionController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/hotels/{hotel_id}/tipo_habitacions",
+     *   path="/Trayectos/{Trayecto_id}/Asientos",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Hoteles tipos habitaciones",
+     *   summary="Get Trayectoes  Asientoes",
      *		  @SWG\Parameter(
-     *          name="hotel_id",
+     *          name="Trayecto_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -43,7 +41,7 @@ class HotelTipoHabitacionController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/TipoHabitacion")
+     *         @SWG\Items(ref="#definitions/Asiento")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -58,10 +56,10 @@ class HotelTipoHabitacionController extends ApiController
      *)
      *
      **/
-    public function index(Hotel $hotel)
+    public function index(Trayecto $Trayecto)
     {
-        $tipos=$hotel->tipo_habitacions;
-        return $this->showAll($tipos);
+        $Asientoes=$Trayecto->asientos;
+        return $this->showAll($Asientoes);
     }
 
     /**

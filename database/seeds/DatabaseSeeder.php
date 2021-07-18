@@ -5,12 +5,12 @@ use App\User;
 use App\Pais;
 use App\Provincia;
 use App\Localidad;
-use App\Hotel;
-use App\Pension;
-use App\TipoHabitacion;
-use App\Habitacion;
+use App\Trayecto;
+use App\Seguro;
+use App\TipoAsiento;
+use App\Asiento;
 use App\Temporada;
-use App\Alojamiento;
+use App\Precio;
 use App\Fecha;
 use App\Cliente;
 use App\Tarjeta;
@@ -33,22 +33,22 @@ class DatabaseSeeder extends Seeder
         Pais::truncate();
         Provincia::truncate();
         Localidad::truncate();
-        Hotel::truncate();
-        Pension::truncate();
-        TipoHabitacion::truncate();
-        Habitacion::truncate();
+        Trayecto::truncate();
+        Seguro::truncate();
+        TipoAsiento::truncate();
+        Asiento::truncate();
         Temporada::truncate();
-        Alojamiento::truncate();
+        Precio::truncate();
         Fecha::truncate();
         Cliente::truncate();
         Tarjeta::truncate();
         Reserva::truncate();
 
         $cantidadUsuarios=20;
-        $cantidadHoteles=100;
-        $cantidadPension=100;
-        $cantidadTipoHabitacion=100;
-        $cantidadHabitaciones=1000;
+        //$cantidadTrayectoes=100;
+        $cantidadSeguro=100;
+        $cantidadTipoAsiento=100;
+        $cantidadAsientoes=1000;
         $cantidadClientes=3000;
         $cantidadTarjetas=5000;
         $cantidadReservas=500;
@@ -58,15 +58,17 @@ class DatabaseSeeder extends Seeder
 
         factory(User::class,$cantidadUsuarios)->create();
         DatabaseSeeder::rellenarLugares();
-        factory(Hotel::class,$cantidadHoteles)->create();
-        DatabaseSeeder::rellenarIdHoteles();
-        factory(Pension::class,$cantidadPension)->create();
-        DatabaseSeeder::rellenarIdHoteles2();
-        factory(TipoHabitacion::class,$cantidadTipoHabitacion)->create();
-        factory(Habitacion::class,$cantidadHabitaciones)->create();
-        DatabaseSeeder::rellenarTemporada();
         $faker= Faker\Factory::create();
-        DatabaseSeeder::rellenarAlojamiento($faker);
+        DatabaseSeeder::rellernarTrayectos($faker);
+        //factory(Trayecto::class,$cantidadTrayectoes)->create();
+        DatabaseSeeder::rellenarIdTrayectoes();
+        factory(Seguro::class,$cantidadSeguro)->create();
+        DatabaseSeeder::rellenarIdTrayectoes2();
+        factory(TipoAsiento::class,$cantidadTipoAsiento)->create();
+        factory(Asiento::class,$cantidadAsientoes)->create();
+        DatabaseSeeder::rellenarTemporada();
+
+        DatabaseSeeder::rellenarPrecio($faker);
         DatabaseSeeder::rellenarFecha();
         factory(Cliente::class,$cantidadClientes)->create();
         factory(Tarjeta::class,$cantidadTarjetas)->create();
@@ -186,23 +188,63 @@ class DatabaseSeeder extends Seeder
       DB::statement("INSERT INTO localidads (id, nombre, Provincia_id) VALUES(52, 'Melilla',52)");
     }
 
-    public function rellenarIdHoteles(){
-      $hoteles=Hotel::All();
+    public function rellernarTrayectos(Faker\Generator $faker){
+        $combiCapitales=DB::select("select l.id 'partida', l2.id 'destino' from localidads l , localidads l2   where l.id =28 and l2.id<>28");
 
-      foreach ($hoteles as $hotel) {
+        foreach ($combiCapitales as $combi) {
+            $values="";
+            for($i=0;$i<8;$i++){
+              $aux=$faker->randomDigit;
+              $values=$values .  strval($aux);
+            }
+            $numero=intval($values);
+            $resto=$numero%23;
+            $letra=array('T','R','W','A','G','M','Y','F','P','D','X','B',
+                        'N','J','Z','S','Q','V','H','L','C','K','E');
+            $values=$values. $letra[$resto];
+            $empresa=$faker->company;
+            $empresa=str_replace("'","",$empresa);
+            DB::statement("Insert into trayectos (NIF,empresa,Localidad_id,Localidad_destino_id) Values ('".$values."','".$empresa ."',".$combi->partida.",".$combi->destino.")" );
 
-        DB::statement(' Insert into pensions (tipo,Hotel_id) values ("'.Pension::SOLO_ALOJAMIENTO.'",'.$hotel->id.')');
+        }
+
+        $combiCapitales2=DB::select("select l.id 'partida', l2.id 'destino' from localidads l , localidads l2   where l.id<>28 and l2.id=28");
+
+        foreach ($combiCapitales2 as $combi) {
+            $values="";
+            for($i=0;$i<8;$i++){
+              $aux=$faker->randomDigit;
+              $values=$values .  strval($aux);
+            }
+            $numero=intval($values);
+            $resto=$numero%23;
+            $letra=array('T','R','W','A','G','M','Y','F','P','D','X','B',
+                        'N','J','Z','S','Q','V','H','L','C','K','E');
+            $values=$values. $letra[$resto];
+            $empresa=$faker->company;
+            $empresa=str_replace("'","",$empresa);
+            DB::statement("Insert into trayectos (NIF,empresa,Localidad_id,Localidad_destino_id) Values ('".$values."','".$empresa ."',".$combi->partida.",".$combi->destino.")" );
+
+        }
+    }
+
+    public function rellenarIdTrayectoes(){
+      $Trayectoes=Trayecto::All();
+
+      foreach ($Trayectoes as $Trayecto) {
+
+        DB::statement(' Insert into Seguros (tipo,Trayecto_id) values ("'.Seguro::SIN_SEGURO.'",'.$Trayecto->id.')');
 
       }
 
     }
 
-    public function rellenarIdHoteles2(){
-      $hoteles=Hotel::All();
+    public function rellenarIdTrayectoes2(){
+      $Trayectoes=Trayecto::All();
 
-      foreach ($hoteles as $hotel) {
+      foreach ($Trayectoes as $Trayecto) {
 
-        DB::statement(' Insert into tipo_habitacions (tipo,Hotel_id) values ("'.TipoHabitacion::HABITACION_NORMAL.'",'.$hotel->id.')');
+        DB::statement(' Insert into tipo_Asientos (tipo,Trayecto_id) values ("'.TipoAsiento::ASIENTO_NORMAL.'",'.$Trayecto->id.')');
 
       }
 
@@ -210,7 +252,7 @@ class DatabaseSeeder extends Seeder
 
     public function rellenarTemporada(){
 
-      $hoteles=Hotel::All();
+      $Trayectoes=Trayecto::All();
 
       $fecha_ini1=DateTime::createFromFormat('Y-m-d',Temporada::INICIAL1);
       $fecha_ini2=DateTime::createFromFormat('Y-m-d',Temporada::INICIAL2);
@@ -220,38 +262,38 @@ class DatabaseSeeder extends Seeder
       $fecha_fin2=date_modify(DateTime::createFromFormat('Y-m-d',Temporada::INICIAL3),'-1 day');
       $fecha_fin3=date_modify(DateTime::createFromFormat('Y-m-d',Temporada::INICIAL4),'-1 day');
       $fecha_fin4=DateTime::createFromFormat('Y-m-d',Temporada::FIN);
-      foreach ($hoteles as $hotel) {
-        DB::statement(' Insert into temporadas (tipo,fecha_desde,fecha_hasta,Hotel_id) values ("'.Temporada::TEMPORADA_BAJA.'","'.date_format($fecha_ini1,'Y-m-d').'","'.date_format($fecha_fin1,'Y-m-d').'",'.$hotel->id.')');
-        DB::statement(' Insert into temporadas (tipo,fecha_desde,fecha_hasta,Hotel_id) values ("'.Temporada::TEMPORADA_BAJA.'","'.date_format($fecha_ini2,'Y-m-d').'","'.date_format($fecha_fin2,'Y-m-d').'",'.$hotel->id.')');
-        DB::statement(' Insert into temporadas (tipo,fecha_desde,fecha_hasta,Hotel_id) values ("'.Temporada::TEMPORADA_ALTA.'","'.date_format($fecha_ini3,'Y-m-d').'","'.date_format($fecha_fin3,'Y-m-d').'",'.$hotel->id.')');
-        DB::statement(' Insert into temporadas (tipo,fecha_desde,fecha_hasta,Hotel_id) values ("'.Temporada::TEMPORADA_MEDIA.'","'.date_format($fecha_ini4,'Y-m-d').'","'.date_format($fecha_fin4,'Y-m-d').'",'.$hotel->id.')');
+      foreach ($Trayectoes as $Trayecto) {
+        DB::statement(' Insert into temporadas (tipo,fecha_desde,fecha_hasta,Trayecto_id) values ("'.Temporada::TEMPORADA_BAJA.'","'.date_format($fecha_ini1,'Y-m-d').'","'.date_format($fecha_fin1,'Y-m-d').'",'.$Trayecto->id.')');
+        DB::statement(' Insert into temporadas (tipo,fecha_desde,fecha_hasta,Trayecto_id) values ("'.Temporada::TEMPORADA_BAJA.'","'.date_format($fecha_ini2,'Y-m-d').'","'.date_format($fecha_fin2,'Y-m-d').'",'.$Trayecto->id.')');
+        DB::statement(' Insert into temporadas (tipo,fecha_desde,fecha_hasta,Trayecto_id) values ("'.Temporada::TEMPORADA_ALTA.'","'.date_format($fecha_ini3,'Y-m-d').'","'.date_format($fecha_fin3,'Y-m-d').'",'.$Trayecto->id.')');
+        DB::statement(' Insert into temporadas (tipo,fecha_desde,fecha_hasta,Trayecto_id) values ("'.Temporada::TEMPORADA_MEDIA.'","'.date_format($fecha_ini4,'Y-m-d').'","'.date_format($fecha_fin4,'Y-m-d').'",'.$Trayecto->id.')');
       }
     }
 
-    public function rellenarAlojamiento(Faker\Generator $faker){
+    public function rellenarPrecio(Faker\Generator $faker){
 
 
-      $alojamientos=DB::select("select p.id 'Pension_id',th.id 'tipo_habitacion_id',t.id 'Temporada_id', p.Hotel_id
-          from pensions p, tipo_habitacions th, temporadas t
-            where p.Hotel_id =t.Hotel_id and th.Hotel_id=t.Hotel_id and p.Hotel_id =th.Hotel_id ");
+      $Precios=DB::select("select p.id 'Seguro_id',th.id 'tipo_asiento_id',t.id 'Temporada_id', p.Trayecto_id
+          from Seguros p, tipo_Asientos th, temporadas t
+            where p.Trayecto_id =t.Trayecto_id and th.Trayecto_id=t.Trayecto_id and p.Trayecto_id =th.Trayecto_id ");
 
 
 
-      foreach ($alojamientos as $alojamiento) {
-          $precio=strval($faker->randomFloat($nbMaxDecimals = 2, $min = 1, $max = 2000));
-          DB::statement(' Insert into alojamientos (Pension_id,tipo_habitacion_id,Temporada_id,precio) values ('.$alojamiento->Pension_id.','.$alojamiento->tipo_habitacion_id.','.$alojamiento->Temporada_id.','.$precio.')');
+      foreach ($Precios as $Precio) {
+          $costo=strval($faker->randomFloat($nbMaxDecimals = 2, $min = 1, $max = 2000));
+          DB::statement(' Insert into Precios (Seguro_id,tipo_asiento_id,Temporada_id,precio) values ('.$Precio->Seguro_id.','.$Precio->tipo_asiento_id.','.$Precio->Temporada_id.','.$costo.')');
 
        }
     }
 
     public function rellenarFecha(){
-      $hoteles=Hotel::All();
+      $Trayectoes=Trayecto::All();
       $start_date = Fecha::INICIAL;
       $fecha = DateTime::createFromFormat('Y-m-d',$start_date);
       for($i=0;$i<365;$i++){
-        foreach ($hoteles as $hotel) {
+        foreach ($Trayectoes as $Trayecto) {
 
-          DB::statement(' Insert into fechas (abierto,Hotel_id) values ("'.date_format($fecha,'Y-m-d').'",'.$hotel->id.')');
+          DB::statement(' Insert into fechas (abierto,Trayecto_id) values ("'.date_format($fecha,'Y-m-d').'",'.$Trayecto->id.')');
 
         }
         $fecha->modify('+1 day');

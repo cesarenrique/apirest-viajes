@@ -4,29 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Pais;
-use App\Hotel;
+use App\Trayecto;
+use App\Seguro;
 
-class PaisHotelController extends ApiController
+class TrayectoSeguroController extends ApiController
 {
   public function __construct(){
     $this->middleware('client.credentials');
 
   }
-    /**
+  /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
      /**
      * @SWG\Get(
-     *   path="/pais/{pais_id}/hotels",
+     *   path="/Trayectos/{Trayecto_id}/Seguros",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Pais Hotels",
+     *   summary="Get Trayectoes Seguroes",
      *		  @SWG\Parameter(
-     *          name="pais_id",
+     *          name="Trayecto_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -42,7 +43,7 @@ class PaisHotelController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Hotel")
+     *         @SWG\Items(ref="#definitions/Seguro")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -57,22 +58,11 @@ class PaisHotelController extends ApiController
      *)
      *
      **/
-    public function index($pais_id)
+    public function index(Trayecto $Trayecto)
     {
-        $pais=Pais::findOrFail($pais_id);
-        $provincias=$pais->provincias;
-        $localidadprevio=collect();
-        foreach($provincias as $provincia){
-          $localidadprevio->push($provincia->localidads);
-        }
-        $localidades=$localidadprevio->collapse();
-        $hotelesprevio=collect();
-        foreach($localidades as $localidad){
-          $hotelesprevio->push($localidad->hotels);
-        }
-        $hoteles=$hotelesprevio->collapse();
-        return $this->showAll($hoteles);
+        $Seguroes=$Trayecto->seguros;
 
+        return $this->showAll($Seguroes);
     }
 
     /**

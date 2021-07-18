@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Hotel;
-use App\Pension;
-
-class HotelPensionController extends ApiController
+use App\Asiento;
+class AsientoReservaController extends ApiController
 {
-  public function __construct(){
-    $this->middleware('client.credentials');
 
-  }
+    public function __construct(){
+      $this->middleware('client.credentials');
+
+    }
   /**
      * Display a listing of the resource.
      *
@@ -21,18 +20,11 @@ class HotelPensionController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/hotels/{hotel_id}/pensions",
+     *   path="/Asientos/{Asiento_id}/reservas",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Hoteles Pensiones",
-     *		  @SWG\Parameter(
-     *          name="hotel_id",
-     *          in="path",
-     *          required=true,
-     *          type="string",
-     *          description="un numero id"
-     *      ),
+     *   summary="Get Asiento All Reservas",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -40,10 +32,17 @@ class HotelPensionController extends ApiController
      *         type="string",
      *         description="Bearer {token_access}",
      *    ),
+     *		  @SWG\Parameter(
+     *          name="Asiento_id",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="un numero id"
+     *      ),
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Pension")
+     *         @SWG\Items(ref="#definitions/Reservas")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -58,11 +57,10 @@ class HotelPensionController extends ApiController
      *)
      *
      **/
-    public function index(Hotel $hotel)
+    public function index(Asiento $Asiento)
     {
-        $pensiones=$hotel->pensions;
-
-        return $this->showAll($pensiones);
+        $reservas=$Asiento->reservas;
+        return $this->showAll($reservas);
     }
 
     /**

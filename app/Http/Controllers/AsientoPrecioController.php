@@ -1,36 +1,32 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Controllers\ApiController;
-use Illuminate\Http\Request;
-use App\Localidad;
 
-class LocalidadHotelController extends ApiController
+use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
+use App\Asiento;
+use App\TipoAsiento;
+
+class AsientoPrecioController extends ApiController
 {
 
-  public function __construct(){
-    $this->middleware('client.credentials');
+    public function __construct(){
+      $this->middleware('client.credentials');
 
-  }
-  /**
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
      /**
      * @SWG\Get(
-     *   path="/localidads/{localidad_id}/hotels",
+     *   path="/Asientos/{Asiento_id}/Precioss",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Localidad Hotels",
-     *		  @SWG\Parameter(
-     *          name="localidad_id",
-     *          in="path",
-     *          required=true,
-     *          type="string",
-     *          description="un numero id"
-     *      ),
+     *   summary="Get Asiento table Precioss",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -38,10 +34,17 @@ class LocalidadHotelController extends ApiController
      *         type="string",
      *         description="Bearer {token_access}",
      *    ),
+     *		  @SWG\Parameter(
+     *          name="Asiento_id",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="un numero id"
+     *      ),
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Hotel")
+     *         @SWG\Items(ref="#definitions/Precios")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -56,11 +59,11 @@ class LocalidadHotelController extends ApiController
      *)
      *
      **/
-    public function index($Localidad_id)
+    public function index(Asiento $Asiento)
     {
-        $localidad =Localidad::findOrFail($Localidad_id);
-        $hoteles=$localidad->hotels;
-        return $this->showAll($hoteles);
+      $tipohab=TipoAsiento::findOrFail($Asiento->tipo_asiento_id);
+      $Precios=$tipohab->precios;
+      return $this->showAll($Precios);
     }
 
     /**

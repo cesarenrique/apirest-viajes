@@ -4,18 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Alojamiento;
-use Illuminate\Support\Facades\DB;
-use App\Hotel;
-use Illuminate\Support\Collection;
+use App\Seguro;
 
-class AlojamientoController extends ApiController
+class SeguroController extends ApiController
 {
-    public function __construct(){
-      $this->middleware('client.credentials');
+  public function __construct(){
+    $this->middleware('client.credentials');
 
-    }
-    /**
+  }
+  /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -23,11 +20,11 @@ class AlojamientoController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/alojamientos",
+     *   path="/Seguros",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Alojamientos",
+     *   summary="Get Seguroes",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -38,7 +35,7 @@ class AlojamientoController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Alojamiento")
+     *         @SWG\Items(ref="#definitions/Seguro")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -52,8 +49,9 @@ class AlojamientoController extends ApiController
      **/
     public function index()
     {
-        $alojamientos=Alojamiento::all();
-        return $this->showAll($alojamientos);
+        $Seguroes=Seguro::all();
+
+        return $this->showAll($Seguroes);
     }
 
     /**
@@ -72,9 +70,56 @@ class AlojamientoController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     /**
+     * @SWG\Post(
+     *   path="/Seguros",
+     *   security={
+     *     {"passport": {}},
+     *   },
+     *   summary="Create Seguro for store",
+     *     @SWG\Parameter(
+     *         name="Autorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         description="Bearer {token_access}",
+     *    ),
+     *		  @SWG\Parameter(
+     *          name="data",
+     *          in="body",
+     *          required=true,
+     *          @SWG\Schema(
+     *            @SWG\Property(property="tipo", type="string", example="Desayuno delux"),
+     *            @SWG\Property(property="Trayecto_id", type="integer", example=1),
+     *          ),
+     *      ),
+     *   @SWG\Response(
+     *      response=201,
+     *      description="Create successful operation",
+     *      @SWG\Schema(ref="#definitions/Seguro")
+     *   ),
+     *   @SWG\Response(response=403, description="Autorization Exception",
+     *      @SWG\Schema(ref="#definitions/Errors403")
+     *   ),
+     *   @SWG\Response(
+     *      response=500,
+     *      description="internal server error",
+     *      @SWG\Schema(ref="#definitions/Errors500")
+     *   )
+     *)
+     *
+     **/
     public function store(Request $request)
     {
-        //
+        $rules=[
+          'tipo'=> 'required',
+          'Trayecto_id'=> 'required|exists:Trayectos,id',
+        ];
+        $this->validate($request,$rules);
+        $campos=$request->all();
+        $Seguro=Seguro::create($campos);
+        return $this->showOne($Seguro,201);
     }
 
     /**
@@ -86,11 +131,18 @@ class AlojamientoController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/alojamientos/{alojamiento_id}",
+     *   path="/Seguros/{Seguro_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Show one Alojamiento",
+     *   summary="Get Seguro",
+     *		  @SWG\Parameter(
+     *          name="Seguro_id",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="un numero id"
+     *      ),
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -98,17 +150,10 @@ class AlojamientoController extends ApiController
      *         type="string",
      *         description="Bearer {token_access}",
      *    ),
-     *		  @SWG\Parameter(
-     *          name="alojamiento_id",
-     *          in="path",
-     *          required=true,
-     *          type="string",
-     *          description="un numero id"
-     *      ),
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Alojamiento")
+     *         @SWG\Items(ref="#definitions/Seguro")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -125,8 +170,8 @@ class AlojamientoController extends ApiController
      **/
     public function show($id)
     {
-        $alojamiento=Alojamiento::findOrFail($id);
-        return $this->showOne($alojamiento);
+        $Seguro=Seguro::findOrFail($id);
+        return $this->showOne($Seguro);
     }
 
     /**
@@ -147,13 +192,14 @@ class AlojamientoController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
      /**
      * @SWG\Put(
-     *   path="/alojamientos/{alojamiento_id}",
+     *   path="/Seguros/{Seguro_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Update Alojamientos",
+     *   summary="Update Seguro",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -162,7 +208,7 @@ class AlojamientoController extends ApiController
      *         description="Bearer {token_access}",
      *    ),
      *		  @SWG\Parameter(
-     *          name="alojamiento_id",
+     *          name="Seguro_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -171,16 +217,16 @@ class AlojamientoController extends ApiController
      *		  @SWG\Parameter(
      *          name="data",
      *          in="body",
-     *          required=true,
+     *          required=false,
      *          @SWG\Schema(
-     *            @SWG\Property(property="precio", type="string", example="299.99"),
+     *            @SWG\Property(property="tipo", type="string", example="Desayuno delux"),
+     *            @SWG\Property(property="Trayecto_id", type="integer", example=1),
      *          ),
      *      ),
-     *   @SWG\Response(response=200, description="successful operation",
-     *     @SWG\Schema(
-     *         type="array",
-     *         @SWG\Items(ref="#definitions/Alojamiento")
-     *     )
+     *   @SWG\Response(
+     *      response=201,
+     *      description="Update successful operation",
+     *      @SWG\Schema(ref="#definitions/Seguro")
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
      *      @SWG\Schema(ref="#definitions/Errors403")
@@ -188,35 +234,38 @@ class AlojamientoController extends ApiController
      *   @SWG\Response(response=404, description="Not Found Exception",
      *      @SWG\Schema(ref="#definitions/Errors404")
      *   ),
-     *   @SWG\Response(response=500, description="internal server error",
+     *   @SWG\Response(
+     *      response=500,
+     *      description="internal server error",
      *      @SWG\Schema(ref="#definitions/Errors500")
-     *   ),
+     *   )
      *)
      *
      **/
     public function update(Request $request, $id)
     {
-      $alojamiento=Alojamiento::findOrFail($id);
-      $rules=[
-        'precio'=> 'required',
-      ];
+        $Seguro=Seguro::findOrFail($id);
+        $rules=[
+          'tipo'=> 'min:2',
+          'Trayecto_id'=> 'exists:Trayectos,id',
+        ];
+        $this->validate($request,$rules);
 
-      $this->validate($request,$rules);
+        if($request->has('tipo')){
+            $Seguro->tipo=$request->tipo;
+        }
 
-      if($request->has('precio')){
-          if(!(preg_match_all('/^[0-9]+([,][0-9]+)?$/',$request->precio))){
-             return $this->errorResponse("el precio tiene que ser formato float",401);
-          }
-          $alojamiento->precio=$request->precio;
-      }
+        if($request->has('Trayecto_id')){
+            $Seguro->Trayecto_id=$request->Trayecto_id;
+        }
 
+        if(!$Seguro->isDirty()){
+           return $this->errorResponse('Se debe especificar al menos un valo
+           r diferente para actualizar',409);
+        }
 
-      if(!$alojamiento->isDirty()){
-         return $this->errorResponse('Se debe especificar al menos un valor diferente para actualizar',409);
-      }
-
-      $alojamiento->save();
-      return $this->showOne($alojamiento);
+        $Seguro->save();
+        return $this->showOne($Seguro);
     }
 
     /**
@@ -225,13 +274,21 @@ class AlojamientoController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
      /**
      * @SWG\Delete(
-     *   path="/alojamientos/{alojamiento_id}",
+     *   path="/Seguros/{Seguro_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Delete Alojamientos",
+     *   summary="Delete Seguros",
+     *		  @SWG\Parameter(
+     *          name="Seguro_id",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="un numero id"
+     *      ),
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -239,17 +296,10 @@ class AlojamientoController extends ApiController
      *         type="string",
      *         description="Bearer {token_access}",
      *    ),
-     *		  @SWG\Parameter(
-     *          name="alojamiento_id",
-     *          in="path",
-     *          required=true,
-     *          type="string",
-     *          description="un numero id"
-     *      ),
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Alojamiento")
+     *         @SWG\Items(ref="#definitions/Seguro")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -266,25 +316,8 @@ class AlojamientoController extends ApiController
      **/
     public function destroy($id)
     {
-      $alojamiento=Alojamiento::findOrFail($id);
-      $alojamiento->delete();
-      return $this->showOne($alojamiento);
+        $Seguro=Seguro::findOrFail($id);
+        $Seguro->delete();
+        return $this->showOne($Seguro);
     }
-    public function descriptivo($alojamiento_id){
-
-       $alojamiento=Alojamiento::findOrFail($alojamiento_id);
-       $alojamientos=DB::select("select a.id 'identificador', precio 'precio', p2.tipo 'pension',
-          th.tipo 'tipoHabitacion', t.tipo 'temporada', t.fecha_desde, t.fecha_hasta
-          from alojamientos a, pensions p2 ,tipo_habitacions th ,temporadas t
-          where  p2.Hotel_id=th.Hotel_id  and p2.Hotel_id =t.Hotel_id
-          and a.Pension_id =p2.id
-          and a.tipo_habitacion_id =th.id and t.id =a.Temporada_id
-          and a.id =".$alojamiento->id );
-       $collection = new Collection();
-       foreach($alojamientos as $alojamiento){
-          $collection->push($alojamiento);
-       }
-       return $this->showOne2($collection->first());
-     }
-
 }

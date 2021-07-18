@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\TipoHabitacion;
+use App\Precio;
+use Illuminate\Support\Facades\DB;
+use App\Trayecto;
+use Illuminate\Support\Collection;
 
-class TipoHabitacionController extends ApiController
+class PrecioController extends ApiController
 {
     public function __construct(){
       $this->middleware('client.credentials');
 
     }
-  /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -20,11 +23,11 @@ class TipoHabitacionController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/tipo_habitacions",
+     *   path="/Precios",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Tipo Habitaciones",
+     *   summary="Get Precios",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -35,7 +38,7 @@ class TipoHabitacionController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/TipoHabitacion")
+     *         @SWG\Items(ref="#definitions/Precio")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -49,9 +52,8 @@ class TipoHabitacionController extends ApiController
      **/
     public function index()
     {
-        $tipohab=TipoHabitacion::all();
-
-        return $this->showAll($tipohab);
+        $Precios=Precio::all();
+        return $this->showAll($Precios);
     }
 
     /**
@@ -70,55 +72,9 @@ class TipoHabitacionController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     /**
-     * @SWG\Post(
-     *   path="/tipo_habitacions",
-     *   security={
-     *     {"passport": {}},
-     *   },
-     *   summary="Create Tipo Habitacion for store",
-     *     @SWG\Parameter(
-     *         name="Autorization",
-     *         in="header",
-     *         required=true,
-     *         type="string",
-     *         description="Bearer {token_access}",
-     *    ),
-     *		  @SWG\Parameter(
-     *          name="data",
-     *          in="body",
-     *          required=true,
-     *          @SWG\Schema(
-     *            @SWG\Property(property="tipo", type="string", example="doble"),
-     *            @SWG\Property(property="Hotel_id", type="integer", example=1),
-     *          ),
-     *      ),
-     *   @SWG\Response(
-     *      response=201,
-     *      description="Create successful operation",
-     *      @SWG\Schema(ref="#definitions/TipoHabitacion")
-     *   ),
-     *   @SWG\Response(response=403, description="Autorization Exception",
-     *      @SWG\Schema(ref="#definitions/Errors403")
-     *   ),
-     *   @SWG\Response(
-     *      response=500,
-     *      description="internal server error",
-     *      @SWG\Schema(ref="#definitions/Errors500")
-     *   )
-     *)
-     *
-     **/
     public function store(Request $request)
     {
-        $rules=[
-          'tipo'=> 'required',
-          'Hotel_id'=> 'required|exists:hotels,id',
-        ];
-        $this->validate($request,$rules);
-        $campos=$request->all();
-        $tipohab=TipoHabitacion::create($campos);
-        return $this->showOne($tipohab,201);
+        //
     }
 
     /**
@@ -130,18 +86,11 @@ class TipoHabitacionController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/tipo_habitacions/{tipo_id}",
+     *   path="/Precios/{Precio_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Tipo Habitacion",
-     *		  @SWG\Parameter(
-     *          name="tipo_id",
-     *          in="path",
-     *          required=true,
-     *          type="integer",
-     *          description="un numero id"
-     *      ),
+     *   summary="Show one Precio",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -149,10 +98,17 @@ class TipoHabitacionController extends ApiController
      *         type="string",
      *         description="Bearer {token_access}",
      *    ),
+     *		  @SWG\Parameter(
+     *          name="Precio_id",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="un numero id"
+     *      ),
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/TipoHabitacion")
+     *         @SWG\Items(ref="#definitions/Precio")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -169,8 +125,8 @@ class TipoHabitacionController extends ApiController
      **/
     public function show($id)
     {
-        $tipohab=TipoHabitacion::findOrFail($id);
-        return $this->showOne($tipohab);
+        $Precio=Precio::findOrFail($id);
+        return $this->showOne($Precio);
     }
 
     /**
@@ -191,14 +147,13 @@ class TipoHabitacionController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
      /**
      * @SWG\Put(
-     *   path="/tipo_habitacions/{tipo_id}",
+     *   path="/Precios/{Precio_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Update Temporada",
+     *   summary="Update Precios",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -207,7 +162,7 @@ class TipoHabitacionController extends ApiController
      *         description="Bearer {token_access}",
      *    ),
      *		  @SWG\Parameter(
-     *          name="tarjeta_id",
+     *          name="Precio_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -216,16 +171,16 @@ class TipoHabitacionController extends ApiController
      *		  @SWG\Parameter(
      *          name="data",
      *          in="body",
-     *          required=false,
+     *          required=true,
      *          @SWG\Schema(
-     *            @SWG\Property(property="tipo", type="string", example="doble"),
-     *            @SWG\Property(property="Hotel_id", type="integer", example=1),
+     *            @SWG\Property(property="precio", type="string", example="299.99"),
      *          ),
      *      ),
-     *   @SWG\Response(
-     *      response=201,
-     *      description="Update successful operation",
-     *      @SWG\Schema(ref="#definitions/TipoHabitacion")
+     *   @SWG\Response(response=200, description="successful operation",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref="#definitions/Precio")
+     *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
      *      @SWG\Schema(ref="#definitions/Errors403")
@@ -233,34 +188,35 @@ class TipoHabitacionController extends ApiController
      *   @SWG\Response(response=404, description="Not Found Exception",
      *      @SWG\Schema(ref="#definitions/Errors404")
      *   ),
-     *   @SWG\Response(
-     *      response=500,
-     *      description="internal server error",
+     *   @SWG\Response(response=500, description="internal server error",
      *      @SWG\Schema(ref="#definitions/Errors500")
-     *   )
+     *   ),
      *)
      *
      **/
-
     public function update(Request $request, $id)
     {
-        $tipohab=TipoHabitacion::findOrFail($id);
-        $rules=[
-          'tipo'=> 'min:2',
-        ];
-        $this->validate($request,$rules);
+      $Precio=Precio::findOrFail($id);
+      $rules=[
+        'precio'=> 'required',
+      ];
 
-        if($request->has('tipo')){
-            $tipohab->tipo=$request->tipo;
-        }
+      $this->validate($request,$rules);
 
-        if(!$tipohab->isDirty()){
-           return $this->errorResponse('Se debe especificar al menos un valo
-           r diferente para actualizar',409);
-        }
+      if($request->has('precio')){
+          if(!(preg_match_all('/^[0-9]+([,][0-9]+)?$/',$request->precio))){
+             return $this->errorResponse("el precio tiene que ser formato float",401);
+          }
+          $Precio->precio=$request->precio;
+      }
 
-        $tipohab->save();
-        return $this->showOne($tipohab);
+
+      if(!$Precio->isDirty()){
+         return $this->errorResponse('Se debe especificar al menos un valor diferente para actualizar',409);
+      }
+
+      $Precio->save();
+      return $this->showOne($Precio);
     }
 
     /**
@@ -271,18 +227,11 @@ class TipoHabitacionController extends ApiController
      */
      /**
      * @SWG\Delete(
-     *   path="/tipo_habitacions/{tipo_id}",
+     *   path="/Precios/{Precio_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Delete Temporada",
-     *		  @SWG\Parameter(
-     *          name="tipo_id",
-     *          in="path",
-     *          required=true,
-     *          type="string",
-     *          description="un numero id"
-     *      ),
+     *   summary="Delete Precios",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -290,10 +239,17 @@ class TipoHabitacionController extends ApiController
      *         type="string",
      *         description="Bearer {token_access}",
      *    ),
+     *		  @SWG\Parameter(
+     *          name="Precio_id",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="un numero id"
+     *      ),
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/TipoHabitacion")
+     *         @SWG\Items(ref="#definitions/Precio")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -310,9 +266,25 @@ class TipoHabitacionController extends ApiController
      **/
     public function destroy($id)
     {
-        $tipohab=TipoHabitacion::findOrFail($id);
-        $tipohab->delete();
-        return $this->showOne($tipohab);
-
+      $Precio=Precio::findOrFail($id);
+      $Precio->delete();
+      return $this->showOne($Precio);
     }
+    public function descriptivo($Precio_id){
+
+       $Precio2=Precio::findOrFail($Precio_id);
+       $Precios=DB::select("select a.id 'identificador', precio 'precio', p2.tipo 'seguro',
+          th.tipo 'tipoAsiento', t.tipo 'temporada', t.fecha_desde, t.fecha_hasta
+          from Precios a, seguros p2 ,tipo_asientos th ,temporadas t
+          where  p2.Trayecto_id=th.Trayecto_id  and p2.Trayecto_id =t.Trayecto_id
+          and a.Seguro_id =p2.id
+          and a.tipo_asiento_id =th.id and t.id =a.Temporada_id
+          and a.id =".$Precio2->id );
+       $collection = new Collection();
+       foreach($Precios as $Precio){
+          $collection->push($Precio);
+       }
+       return $this->showOne2($collection->first());
+     }
+
 }

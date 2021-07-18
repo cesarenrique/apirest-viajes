@@ -4,25 +4,35 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\TipoHabitacion;
-class TipoHabitacionHabitacionController extends ApiController
-{
-    public function __construct(){
-      $this->middleware('client.credentials');
+use App\Trayecto;
 
-    }
-    /**
+class TrayectoTipoAsientoController extends ApiController
+{
+
+  public function __construct(){
+    $this->middleware('client.credentials');
+
+  }
+  /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
      /**
      * @SWG\Get(
-     *   path="/tipo_habitacions/{tipo_id}/habitacions",
+     *   path="/Trayectos/{Trayecto_id}/tipo_habitacions",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Tipo Habitaciones -> Habitaciones",
+     *   summary="Get Trayectoes tipos habitaciones",
+     *		  @SWG\Parameter(
+     *          name="Trayecto_id",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="un numero id"
+     *      ),
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -33,7 +43,7 @@ class TipoHabitacionHabitacionController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Habitacion")
+     *         @SWG\Items(ref="#definitions/TipoAsiento")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -48,11 +58,10 @@ class TipoHabitacionHabitacionController extends ApiController
      *)
      *
      **/
-    public function index($tipohab_id)
+    public function index(Trayecto $Trayecto)
     {
-        $tipohab=TipoHabitacion::findOrFail($tipohab_id);
-        $habitaciones=$tipohab->habitacions;
-        return $this->showAll($habitaciones);
+        $tipos=$Trayecto->tipo_asientos;
+        return $this->showAll($tipos);
     }
 
     /**

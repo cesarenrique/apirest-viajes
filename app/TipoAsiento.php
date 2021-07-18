@@ -13,9 +13,8 @@ class TipoAsiento extends Model
 
     //basicos
     const ASIENTO_NORMAL="normal";
-    const ASIENTO_SIMPLE="simple";
-    const ASIENTO_DOBLE="doble";
-    const ASIENTO_MATRIMONIAL="matrimonial";
+    const ASIENTO_EJECUTIVO="ejecutivo";
+    const ASIENTO_TURISTA="turista";
     public $transformer= TipoAsientoTransformer::class;
     /**
     * The attributes that are mass assignable.
@@ -28,11 +27,11 @@ class TipoAsiento extends Model
       'Trayecto_id',
     ];
 
-    public function Asientos(){
+    public function asientos(){
       return $this->hasMany(Asiento::class);
     }
 
-    public function Precios(){
+    public function precios(){
       return $this->hasMany(Precio::class);
     }
 }

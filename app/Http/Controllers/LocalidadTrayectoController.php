@@ -1,33 +1,31 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Provincia;
+use Illuminate\Http\Request;
+use App\Localidad;
 
-class ProvinciaHotelController extends ApiController
+class LocalidadTrayectoController extends ApiController
 {
 
-    public function __construct(){
-      $this->middleware('client.credentials');
+  public function __construct(){
+    $this->middleware('client.credentials');
 
-    }
+  }
   /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
      /**
      * @SWG\Get(
-     *   path="/provincias/{provincia_id}/hotels",
+     *   path="/localidads/{localidad_id}/Trayectos",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Provincia Hotels",
+     *   summary="Get Localidad Trayectos",
      *		  @SWG\Parameter(
-     *          name="provincia_id",
+     *          name="localidad_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -43,7 +41,7 @@ class ProvinciaHotelController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Hotel")
+     *         @SWG\Items(ref="#definitions/Trayecto")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -58,17 +56,11 @@ class ProvinciaHotelController extends ApiController
      *)
      *
      **/
-    public function index($Provincia_id)
+    public function index($Localidad_id)
     {
-
-      $provincia=Provincia::findOrFail($Provincia_id);
-      $localidades=$provincia->localidads;
-      $hotelesprevio=collect();
-      foreach($localidades as $localidad){
-        $hotelesprevio->push($localidad->hotels);
-      }
-      $hoteles=$hotelesprevio->collapse();
-      return $this->showAll($hoteles);
+        $localidad =Localidad::findOrFail($Localidad_id);
+        $Trayectoes=$localidad->trayectos;
+        return $this->showAll($Trayectoes);
     }
 
     /**

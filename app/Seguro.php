@@ -10,10 +10,9 @@ class Seguro extends Model
 {
     use SoftDeletes;
     //
-    const SOLO_ALOJAMIENTO="solo alojamiento";
-    const SEGURO_DESAYUNO="solo desayuno";
-    const SEGURO_COMPLETA="desayuno y comida";
-    const SEGURO_COMPLETA_CENA="desayuno, comida y cena";
+    const SIN_SEGURO="Sin Seguro";
+    const SEGURO_VIAJE="Seguro de viaje normal";
+    const SEGURO_VIAJE_PLUS="Seguro de viaje plus";
 
     public $transformer= SeguroTransformer::class;
     /**

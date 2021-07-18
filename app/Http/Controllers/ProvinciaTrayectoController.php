@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Hotel;
-use App\Pension;
+use App\Provincia;
 
-class HotelReservaController extends ApiController
+class ProvinciaTrayectoController extends ApiController
 {
-  public function __construct(){
-    $this->middleware('client.credentials');
 
-  }
+    public function __construct(){
+      $this->middleware('client.credentials');
+
+    }
   /**
      * Display a listing of the resource.
      *
@@ -21,13 +21,13 @@ class HotelReservaController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/hotels/{hotel_id}/reservas",
+     *   path="/provincias/{provincia_id}/Trayectos",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Hoteles  reservas",
+     *   summary="Get Provincia Trayectos",
      *		  @SWG\Parameter(
-     *          name="hotel_id",
+     *          name="provincia_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -43,7 +43,7 @@ class HotelReservaController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Reservas")
+     *         @SWG\Items(ref="#definitions/Trayecto")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -58,15 +58,17 @@ class HotelReservaController extends ApiController
      *)
      *
      **/
-    public function index(Hotel $hotel)
+    public function index($Provincia_id)
     {
-        $habitaciones=$hotel->habitacions;
-        $previo=collect();
-        foreach($habitaciones as $habitacion){
-          $previo->push($habitacion->reservas);
-        }
-        $reservas=$previo->collapse();
-        return $this->showAll($reservas);
+
+      $provincia=Provincia::findOrFail($Provincia_id);
+      $localidades=$provincia->localidads;
+      $Trayectoesprevio=collect();
+      foreach($localidades as $localidad){
+        $Trayectoesprevio->push($localidad->trayectos);
+      }
+      $Trayectoes=$Trayectoesprevio->collapse();
+      return $this->showAll($Trayectoes);
     }
 
     /**

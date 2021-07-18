@@ -4,27 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Habitacion;
-class HabitacionReservaController extends ApiController
+use App\TipoAsiento;
+class TipoAsientoAsientoController extends ApiController
 {
-
     public function __construct(){
       $this->middleware('client.credentials');
 
     }
-  /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
      /**
      * @SWG\Get(
-     *   path="/habitacions/{habitacion_id}/reservas",
+     *   path="/tipo_Asientos/{tipo_id}/Asientos",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Habitacion All Reservas",
+     *   summary="Get Tipo Asientoes -> Asientoes",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -32,17 +30,10 @@ class HabitacionReservaController extends ApiController
      *         type="string",
      *         description="Bearer {token_access}",
      *    ),
-     *		  @SWG\Parameter(
-     *          name="habitacion_id",
-     *          in="path",
-     *          required=true,
-     *          type="string",
-     *          description="un numero id"
-     *      ),
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Reservas")
+     *         @SWG\Items(ref="#definitions/Asiento")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -57,10 +48,11 @@ class HabitacionReservaController extends ApiController
      *)
      *
      **/
-    public function index(Habitacion $habitacion)
+    public function index($tipohab_id)
     {
-        $reservas=$habitacion->reservas;
-        return $this->showAll($reservas);
+        $tipohab=TipoAsiento::findOrFail($tipohab_id);
+        $Asientoes=$tipohab->asientos;
+        return $this->showAll($Asientoes);
     }
 
     /**

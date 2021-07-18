@@ -5,14 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Seguro;
-use App\TipoHabitacion;
+use App\TipoAsiento;
 use App\Transformers\TrajectoTransformer;
 
-class Trajecto extends Model
+class Trayecto extends Model
 {
     use SoftDeletes;
 
-    public $transformer= TrajectoTransformer::class;
+    public $transformer= TrayectoTransformer::class;
     protected $dates=['deleted_at'];
     protected $fillable = [
         'NIF', 'nombre', 'Localidad_id', 'Localidad_destino_id',
@@ -22,12 +22,12 @@ class Trajecto extends Model
         return $this->hasMany(Seguro::class);
     }
 
-    public function tipo_habitacions(){
-        return $this->hasMany(TipoHabitacion::class);
+    public function tipo_asientos(){
+        return $this->hasMany(TipoAsiento::class);
     }
 
-    public function habitacions(){
-        return $this->hasMany(Habitacion::class);
+    public function asientos(){
+        return $this->hasMany(Asiento::class);
     }
 
     public function fechas(){

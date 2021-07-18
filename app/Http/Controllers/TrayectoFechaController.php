@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\DB;
-use App\Hotel;
+use App\Trayecto;
 use DateTime;
 
-class HotelFechaController extends ApiController
+class TrayectoFechaController extends ApiController
 {
 
   public function __construct(){
@@ -23,13 +23,13 @@ class HotelFechaController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/hotels/{hotel_id}/fechas",
+     *   path="/Trayectos/{Trayecto_id}/fechas",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Hoteles table fechas",
+     *   summary="Get Trayectoes table fechas",
      *		  @SWG\Parameter(
-     *          name="hotel_id",
+     *          name="Trayecto_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -60,9 +60,9 @@ class HotelFechaController extends ApiController
      *)
      *
      **/
-    public function index(Hotel $hotel)
+    public function index(Trayecto $Trayecto)
     {
-        $fechas=$hotel->fechas;
+        $fechas=$Trayecto->fechas;
         return $this->showAll($fechas);
     }
 
@@ -140,7 +140,7 @@ class HotelFechaController extends ApiController
      */
     public function abrir(Request $request,$id)
     {
-        $hotel=Hotel::findOrFail($id);
+        $Trayecto=Trayecto::findOrFail($id);
         $rules=[
           'fecha_desde'=> 'required',
           'dias'=> 'required',
@@ -162,15 +162,15 @@ class HotelFechaController extends ApiController
         $fecha = DateTime::createFromFormat('Y-m-d',$start_date);
         for($i=0;$i<$tam;$i++){
 
-          $cantidad=DB::select("select count(*) as 'cantidad' from fechas a where a.abierto='".date_format($fecha,'Y-m-d')."' and a.Hotel_id=".$hotel->id);
+          $cantidad=DB::select("select count(*) as 'cantidad' from fechas a where a.abierto='".date_format($fecha,'Y-m-d')."' and a.Trayecto_id=".$Trayecto->id);
 
           if($cantidad[0]->cantidad==0){
-              DB::statement(' Insert into fechas (abierto,Hotel_id) values ("'.date_format($fecha,'Y-m-d').'",'.$hotel->id.')');
+              DB::statement(' Insert into fechas (abierto,Trayecto_id) values ("'.date_format($fecha,'Y-m-d').'",'.$Trayecto->id.')');
 
           }
           $fecha->modify('+1 day');
         }
-        return response()->json(['data'=>'dias que hotel esta abierto actualizada'],200);
+        return response()->json(['data'=>'dias que Trayecto esta abierto actualizada'],200);
     }
 
     /**
@@ -181,7 +181,7 @@ class HotelFechaController extends ApiController
      */
     public function cerrar(Request $request,$id)
     {
-        $hotel=Hotel::findOrFail($id);
+        $Trayecto=Trayecto::findOrFail($id);
         $rules=[
           'fecha_desde'=> 'required',
           'fecha_hasta'=> 'required',
@@ -197,7 +197,7 @@ class HotelFechaController extends ApiController
         if(!(preg_match_all('/^(\d{4})(-)(0[1-9]|1[0-2])(-)([0-2][0-9]|3[0-1])$/',$fecha_hasta))){
            return $this->errorResponse("la fecha tiene que ser formato yyyy-MM-dd y una fecha valida",401);
         }
-        DB::statement("delete from fechas f where f.Hotel_id=".$hotel->id." and  '".$fecha_desde."'<=f.abierto and f.abierto<='". $fecha_hasta. "'");
-        return response()->json(['data'=>'dias que hotel esta cerrado actualizada'],200);
+        DB::statement("delete from fechas f where f.Trayecto_id=".$Trayecto->id." and  '".$fecha_desde."'<=f.abierto and f.abierto<='". $fecha_hasta. "'");
+        return response()->json(['data'=>'dias que Trayecto esta cerrado actualizada'],200);
     }
 }

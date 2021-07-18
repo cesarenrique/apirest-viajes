@@ -4,28 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Hotel;
-class HotelHabitacionController extends ApiController
+use App\Pais;
+use App\Trayecto;
+
+class PaisTrayectoController extends ApiController
 {
   public function __construct(){
     $this->middleware('client.credentials');
 
   }
-  /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
      /**
      * @SWG\Get(
-     *   path="/hotels/{hotel_id}/habitacions",
+     *   path="/pais/{pais_id}/Trayectos",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Hoteles  habitaciones",
+     *   summary="Get Pais Trayectos",
      *		  @SWG\Parameter(
-     *          name="hotel_id",
+     *          name="pais_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -41,7 +42,7 @@ class HotelHabitacionController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Habitacion")
+     *         @SWG\Items(ref="#definitions/Trayecto")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -56,10 +57,22 @@ class HotelHabitacionController extends ApiController
      *)
      *
      **/
-    public function index(Hotel $hotel)
+    public function index($pais_id)
     {
-        $habitaciones=$hotel->habitacions;
-        return $this->showAll($habitaciones);
+        $pais=Pais::findOrFail($pais_id);
+        $provincias=$pais->provincias;
+        $localidadprevio=collect();
+        foreach($provincias as $provincia){
+          $localidadprevio->push($provincia->localidads);
+        }
+        $localidades=$localidadprevio->collapse();
+        $Trayectoesprevio=collect();
+        foreach($localidades as $localidad){
+          $Trayectoesprevio->push($localidad->trayectos);
+        }
+        $Trayectoes=$Trayectoesprevio->collapse();
+        return $this->showAll($Trayectoes);
+
     }
 
     /**

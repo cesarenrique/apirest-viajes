@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Pension;
+use App\TipoAsiento;
 
-class PensionController extends ApiController
+class TipoAsientoController extends ApiController
 {
-  public function __construct(){
-    $this->middleware('client.credentials');
+    public function __construct(){
+      $this->middleware('client.credentials');
 
-  }
+    }
   /**
      * Display a listing of the resource.
      *
@@ -20,11 +20,11 @@ class PensionController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/pensions",
+     *   path="/tipo_habitacions",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Pensiones",
+     *   summary="Get Tipo Habitaciones",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -35,7 +35,7 @@ class PensionController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Pension")
+     *         @SWG\Items(ref="#definitions/TipoAsiento")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -49,9 +49,9 @@ class PensionController extends ApiController
      **/
     public function index()
     {
-        $pensiones=Pension::all();
+        $tipohab=TipoAsiento::all();
 
-        return $this->showAll($pensiones);
+        return $this->showAll($tipohab);
     }
 
     /**
@@ -70,14 +70,13 @@ class PensionController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
      /**
      * @SWG\Post(
-     *   path="/pensions",
+     *   path="/tipo_habitacions",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Create Pension for store",
+     *   summary="Create Tipo Habitacion for store",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -90,14 +89,14 @@ class PensionController extends ApiController
      *          in="body",
      *          required=true,
      *          @SWG\Schema(
-     *            @SWG\Property(property="tipo", type="string", example="Desayuno delux"),
+     *            @SWG\Property(property="tipo", type="string", example="doble"),
      *            @SWG\Property(property="Hotel_id", type="integer", example=1),
      *          ),
      *      ),
      *   @SWG\Response(
      *      response=201,
      *      description="Create successful operation",
-     *      @SWG\Schema(ref="#definitions/Pension")
+     *      @SWG\Schema(ref="#definitions/TipoAsiento")
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
      *      @SWG\Schema(ref="#definitions/Errors403")
@@ -118,8 +117,8 @@ class PensionController extends ApiController
         ];
         $this->validate($request,$rules);
         $campos=$request->all();
-        $pension=Pension::create($campos);
-        return $this->showOne($pension,201);
+        $tipohab=TipoAsiento::create($campos);
+        return $this->showOne($tipohab,201);
     }
 
     /**
@@ -131,16 +130,16 @@ class PensionController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/pensions/{pension_id}",
+     *   path="/tipo_habitacions/{tipo_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Pension",
+     *   summary="Get Tipo Habitacion",
      *		  @SWG\Parameter(
-     *          name="pension_id",
+     *          name="tipo_id",
      *          in="path",
      *          required=true,
-     *          type="string",
+     *          type="integer",
      *          description="un numero id"
      *      ),
      *     @SWG\Parameter(
@@ -153,7 +152,7 @@ class PensionController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Pension")
+     *         @SWG\Items(ref="#definitions/TipoAsiento")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -170,8 +169,8 @@ class PensionController extends ApiController
      **/
     public function show($id)
     {
-        $pension=Pension::findOrFail($id);
-        return $this->showOne($pension);
+        $tipohab=TipoAsiento::findOrFail($id);
+        return $this->showOne($tipohab);
     }
 
     /**
@@ -195,11 +194,11 @@ class PensionController extends ApiController
 
      /**
      * @SWG\Put(
-     *   path="/pensions/{pension_id}",
+     *   path="/tipo_habitacions/{tipo_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Update Pension",
+     *   summary="Update Temporada",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -208,7 +207,7 @@ class PensionController extends ApiController
      *         description="Bearer {token_access}",
      *    ),
      *		  @SWG\Parameter(
-     *          name="pension_id",
+     *          name="tarjeta_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -219,14 +218,14 @@ class PensionController extends ApiController
      *          in="body",
      *          required=false,
      *          @SWG\Schema(
-     *            @SWG\Property(property="tipo", type="string", example="Desayuno delux"),
+     *            @SWG\Property(property="tipo", type="string", example="doble"),
      *            @SWG\Property(property="Hotel_id", type="integer", example=1),
      *          ),
      *      ),
      *   @SWG\Response(
      *      response=201,
      *      description="Update successful operation",
-     *      @SWG\Schema(ref="#definitions/Pension")
+     *      @SWG\Schema(ref="#definitions/TipoAsiento")
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
      *      @SWG\Schema(ref="#definitions/Errors403")
@@ -242,30 +241,25 @@ class PensionController extends ApiController
      *)
      *
      **/
+
     public function update(Request $request, $id)
     {
-        $pension=Pension::findOrFail($id);
+        $tipohab=TipoAsiento::findOrFail($id);
         $rules=[
           'tipo'=> 'min:2',
-          'Hotel_id'=> 'exists:hotels,id',
         ];
         $this->validate($request,$rules);
 
         if($request->has('tipo')){
-            $pension->tipo=$request->tipo;
+            $tipohab->tipo=$request->tipo;
         }
 
-        if($request->has('Hotel_id')){
-            $pension->Hotel_id=$request->Hotel_id;
+        if(!$tipohab->isDirty()){
+           return $this->errorResponse('Se debe especificar al menos un valor diferente para actualizar',409);
         }
 
-        if(!$pension->isDirty()){
-           return $this->errorResponse('Se debe especificar al menos un valo
-           r diferente para actualizar',409);
-        }
-
-        $pension->save();
-        return $this->showOne($pension);
+        $tipohab->save();
+        return $this->showOne($tipohab);
     }
 
     /**
@@ -274,16 +268,15 @@ class PensionController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
      /**
      * @SWG\Delete(
-     *   path="/pensions/{pension_id}",
+     *   path="/tipo_habitacions/{tipo_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Delete Pensions",
+     *   summary="Delete Temporada",
      *		  @SWG\Parameter(
-     *          name="pension_id",
+     *          name="tipo_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -299,7 +292,7 @@ class PensionController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Pension")
+     *         @SWG\Items(ref="#definitions/TipoAsiento")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -316,8 +309,9 @@ class PensionController extends ApiController
      **/
     public function destroy($id)
     {
-        $pension=Pension::findOrFail($id);
-        $pension->delete();
-        return $this->showOne($pension);
+        $tipohab=TipoAsiento::findOrFail($id);
+        $tipohab->delete();
+        return $this->showOne($tipohab);
+
     }
 }

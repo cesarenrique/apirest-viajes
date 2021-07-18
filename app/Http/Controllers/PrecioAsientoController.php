@@ -4,25 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Alojamiento;
-use App\TipoHabitacion;
-use App\Habitacion;
+use App\Precio;
+use App\TipoAsiento;
+use App\Asiento;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-class AlojamientoHabitacionController extends ApiController
+class PrecioAsientoController extends ApiController
 {
+
+    public function __construct(){
+      $this->middleware('client.credentials');
+
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($alojamiento_id)
+    public function index($Precio_id)
     {
-        $alojamiento=Alojamiento::findOrFail($alojamiento_id);
-        $tipo=TipoHabitacion::findOrFail($alojamiento->tipo_habitacion_id);
-        $habitaciones=$tipo->habitacions;
-        return $this->showAll($habitaciones);
+        $Precio=Precio::findOrFail($Precio_id);
+        $tipo=TipoAsiento::findOrFail($Precio->tipo_asiento_id);
+        $Asientoes=$tipo->asientos;
+        return $this->showAll($Asientoes);
     }
 
     /**
@@ -52,16 +57,16 @@ class AlojamientoHabitacionController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,$habitacion_id)
+    public function show($id,$Asiento_id)
     {
 
-      $alojamiento=Alojamiento::findOrFail($id);
-      $tipo=TipoHabitacion::findOrFail($alojamiento->tipo_habitacion_id);
-      $habitacion=Habitacion::findOrFail($habitacion_id);
-      if($tipo->id!=$habitacion->tipo_habitacion_id){
-        return $this->errorResponse('La habitacion no se corresponde con el tipo',404);
+      $Precio=Precio::findOrFail($id);
+      $tipo=TipoAsiento::findOrFail($Precio->tipo_Asiento_id);
+      $Asiento=Asiento::findOrFail($Asiento_id);
+      if($tipo->id!=$Asiento->tipo_Asiento_id){
+        return $this->errorResponse('La Asiento no se corresponde con el tipo',404);
       }
-      return $this->showOne($habitacion);
+      return $this->showOne($Asiento);
     }
 
     /**
@@ -104,7 +109,7 @@ class AlojamientoHabitacionController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function fechas(Request $request,$alojamiento_id)
+    public function fechas(Request $request,$Precio_id)
     {
         $rules=[
           'fecha_desde'=> 'required',
@@ -132,22 +137,22 @@ class AlojamientoHabitacionController extends ApiController
         }
 
         $dias=$fechaDesde->diffInDays($fechaHasta);
-        $alojamiento=Alojamiento::findOrFail($alojamiento_id);
-        $tipo=TipoHabitacion::findOrFail($alojamiento->tipo_habitacion_id);
-        $habitaciones=$tipo->habitacions;
+        $Precio=Precio::findOrFail($Precio_id);
+        $tipo=TipoAsiento::findOrFail($Precio->tipo_asiento_id);
+        $Asientoes=$tipo->Asientos;
         $collection=new Collection();
-        foreach($habitaciones as $habitacion){
-          $cantidad=DB::select("select count(f.id) 'cantidad' from fechas f,  habitacions h
-           where f.Hotel_id=h.Hotel_id
-           and f.Hotel_id =".$habitacion->Hotel_id." and '".$fechaDesde."'<=f.abierto
-           and f.abierto<= '".$fechaHasta."' and h.id =".$habitacion->id);
-           $cantidad2=DB::select("select count(f.id) 'cantidad' from fechas f , habitacions h,reservas r
-           where f.Hotel_id=h.Hotel_id
-           and f.Hotel_id =".$habitacion->Hotel_id." and '".$fechaDesde."'<=f.abierto and r.Habitacion_id =h.id
+        foreach($Asientoes as $Asiento){
+          $cantidad=DB::select("select count(f.id) 'cantidad' from fechas f,  Asientos h
+           where f.Trayecto_id=h.Trayecto_id
+           and f.Trayecto_id =".$Asiento->Trayecto_id." and '".$fechaDesde."'<=f.abierto
+           and f.abierto<= '".$fechaHasta."' and h.id =".$Asiento->id);
+           $cantidad2=DB::select("select count(f.id) 'cantidad' from fechas f , Asientos h,reservas r
+           where f.Trayecto_id=h.Trayecto_id
+           and f.Trayecto_id =".$Asiento->Trayecto_id." and '".$fechaDesde."'<=f.abierto and r.Asiento_id =h.id
            and f.id=r.Fecha_id
-           and f.abierto<= '".$fechaHasta."' and h.id =".$habitacion->id);
+           and f.abierto<= '".$fechaHasta."' and h.id =".$Asiento->id);
           if($dias==($cantidad[0]->cantidad-$cantidad2[0]->cantidad)){
-            $collection->push($habitacion);
+            $collection->push($Asiento);
           }
         }
         return $this->showAll($collection);

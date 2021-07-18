@@ -42,6 +42,7 @@ $factory->define(User::class, function (Faker $faker) {
   ];
 });
 
+/*
 $factory->define(App\Trayecto::class, function (Faker $faker) {
     $localidad= Localidad::All()->random();
     $values="";
@@ -54,16 +55,19 @@ $factory->define(App\Trayecto::class, function (Faker $faker) {
     $letra=array('T','R','W','A','G','M','Y','F','P','D','X','B',
                 'N','J','Z','S','Q','V','H','L','C','K','E');
     $values=$values. $letra[$resto];
+    $empresa=$faker->company
+    $empresa=str_replace("'","",$empresa);
     return [
-      'nombre' => $faker->name,
+      'empresa' => $empresa,
       'NIF' => $values,
       'Localidad_id'=> $localidad->id,
+      'Localidad_destino_id'=> $localidad
     ];
-});
+});*/
 $factory->define(App\Seguro::class, function (Faker $faker) {
     $Trayecto=Trayecto::All()->random();
     return [
-       'tipo'=> $faker->randomElement([Seguro::SEGURO_DESAYUNO,Seguro::SEGURO_COMPLETA,Seguro::SEGURO_COMPLETA_CENA]),
+       'tipo'=> $faker->randomElement([Seguro::SEGURO_VIAJE,Seguro::SEGURO_VIAJE_PLUS]),
        'Trayecto_id'=>$Trayecto->id,
     ];
 });
@@ -71,7 +75,7 @@ $factory->define(App\Seguro::class, function (Faker $faker) {
 $factory->define(App\TipoAsiento::class, function (Faker $faker) {
     $Trayecto=Trayecto::All()->random();
     return [
-       'tipo'=> $faker->randomElement([TipoAsiento::ASIENTO_SIMPLE,TipoAsiento::ASIENTO_DOBLE,TipoAsiento::ASIENTO_MATRIMONIAL]),
+       'tipo'=> $faker->randomElement([TipoAsiento::ASIENTO_TURISTA,TipoAsiento::ASIENTO_EJECUTIVO]),
        'Trayecto_id'=>$Trayecto->id,
     ];
 });
@@ -85,10 +89,8 @@ $factory->define(App\Asiento::class, function (Faker $faker) {
     if($numero<10) $ceros="00";
     if(10<$numero && $numero<100) $ceros="0";
     $numero2=$ceros.$numero;
-    $empresa= $faker->company();
     return [
        'numero'=> $numero2,
-       'empresa'=> $empresa,
        'Trayecto_id'=> $Trayecto->id,
        'tipo_Asiento_id'=> $tipo->id,
      ];
@@ -136,7 +138,7 @@ $factory->define(App\Reserva::class, function (Faker $faker) {
 
     $Precio=Precio::where('Temporada_id',$temporada->id)
       ->where('Seguro_id',$Seguro->id)
-      ->where('tipo_Asiento_id',$Asiento->tipo_Asiento_id)
+      ->where('tipo_asiento_id',$Asiento->tipo_asiento_id)
       ->get()->random();
     return [
 

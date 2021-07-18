@@ -4,24 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Alojamiento;
-use App\TipoHabitacion;
-use App\Hotel;
+use App\Precio;
+use App\TipoAsiento;
+use App\Trayecto;
 
-class AlojamientoHotelController extends ApiController
+class PrecioTrayectoController extends ApiController
 {
+
+      public function __construct(){
+        $this->middleware('client.credentials');
+
+      }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($alojamiento_id)
+    public function index($Precio_id)
     {
-        $alojamiento=Alojamiento::findOrFail($alojamiento_id);
-        $tipo=TipoHabitacion::findOrFail($alojamiento->tipo_habitacion_id);
-        $hotel=Hotel::findOrFail($tipo->Hotel_id);
+        $Precio=Precio::findOrFail($Precio_id);
+        $tipo=TipoAsiento::findOrFail($Precio->tipo_asiento_id);
+        $Trayecto=Trayecto::findOrFail($tipo->Trayecto_id);
 
-        return $this->showOne($hotel);
+        return $this->showOne($Trayecto);
     }
 
     /**

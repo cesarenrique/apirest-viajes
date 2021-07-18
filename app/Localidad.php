@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Provincia;
-use App\Trajecto;
+use App\Trayecto;
 use App\Transformers\LocalidadTransformer;
 
 class Localidad extends Model
@@ -30,7 +30,7 @@ class Localidad extends Model
     return $this->belongsTo(Provincia::class);
   }
 
-  public function Trajectos(){
-    return $this->hasMany(Trajecto::class);
+  public function trayectos(){
+    return $this->hasMany(Trayecto::class);
   }
 }

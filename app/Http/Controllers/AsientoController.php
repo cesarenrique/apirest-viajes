@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Hotel;
+use App\Asiento;
+use App\TipoAsiento;
 
-class HotelController extends ApiController
+class AsientoController extends ApiController
 {
+    public function __construct(){
+      $this->middleware('client.credentials');
 
-  public function __construct(){
-    $this->middleware('client.credentials');
-
-  }
-  /**
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -21,11 +21,11 @@ class HotelController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/hotets",
+     *   path="/Asientos",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Hoteles",
+     *   summary="Get Asientoes",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -36,7 +36,7 @@ class HotelController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Hotel")
+     *         @SWG\Items(ref="#definitions/Asiento")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -50,9 +50,8 @@ class HotelController extends ApiController
      **/
     public function index()
     {
-        $hotels=Hotel::all();
-
-        return $this->showAll($hotels);
+        $Asiento=Asiento::all();
+        return $this->showAll($Asiento);
     }
 
     /**
@@ -74,11 +73,11 @@ class HotelController extends ApiController
 
      /**
      * @SWG\Post(
-     *   path="/hotels",
+     *   path="/Asientos",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Create Hotel for store",
+     *   summary="Create Asiento for store",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -91,18 +90,24 @@ class HotelController extends ApiController
      *          in="body",
      *          required=true,
      *          @SWG\Schema(
-     *            @SWG\Property(property="nombre", type="string", example="nombre apellido"),
-     *            @SWG\Property(property="NIF", type="string", example="12345678Z"),
-     *            @SWG\Property(property="Localidad_id", type="integer", example=1),
+     *            @SWG\Property(property="numero", type="string", example="120"),
+     *            @SWG\Property(property="Trayecto_id", type="integer", example=1),
+     *            @SWG\Property(property="tipo_Asientos", type="integer", example=1)
      *          ),
      *      ),
      *   @SWG\Response(
      *      response=201,
      *      description="Create successful operation",
-     *      @SWG\Schema(ref="#definitions/Hotel")
+     *      @SWG\Schema(ref="#definitions/Asiento")
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
      *      @SWG\Schema(ref="#definitions/Errors403")
+     *   ),
+     *   @SWG\Response(response=404, description="Not Found Exception",
+     *      @SWG\Schema(ref="#definitions/Errors404")
+     *   ),
+     *   @SWG\Response(response=406, description="Not Aceptable",
+     *      @SWG\Schema(ref="#definitions/Errors406")
      *   ),
      *   @SWG\Response(
      *      response=500,
@@ -115,14 +120,20 @@ class HotelController extends ApiController
     public function store(Request $request)
     {
         $rules=[
-          'NIF'=> 'required|min:8',
-          'nombre'=> 'required|min:2',
-          'Localidad_id' => 'required|exists:localidads,id',
+          'numero'=> 'required',
+          'Trayecto_id'=> 'required|exists:Trayectos,id',
+          'tipo_asiento_id'=> 'required|exists:tipo_asientos,id',
         ];
+
         $this->validate($request,$rules);
         $campos=$request->all();
-        $hotel=Hotel::create($campos);
-        return $this->showOne($hotel,201);
+        $tipohab=TipoAsiento::findOrFail($request->tipo_asiento_id);
+        if($tipohab->Trayecto_id!=$request->Trayecto_id){
+           return $this->errorResponse('El id de Trayecto del tipo de habitación
+           debe ser mismo Trayecto que se desea crear la habitación',406);
+        }
+        $Asiento=Asiento::create($campos);
+        return $this->showOne($Asiento,201);
     }
 
     /**
@@ -131,16 +142,15 @@ class HotelController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
      /**
      * @SWG\Get(
-     *   path="/hotels/{hotel_id}",
+     *   path="/Asientos/{Asiento_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Hotel",
+     *   summary="Get Asiento",
      *		  @SWG\Parameter(
-     *          name="hotel_id",
+     *          name="Asiento_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -156,7 +166,7 @@ class HotelController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Hotel")
+     *         @SWG\Items(ref="#definitions/Asiento")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -173,8 +183,8 @@ class HotelController extends ApiController
      **/
     public function show($id)
     {
-        $hotel=Hotel::findOrFail($id);
-        return $this->showOne($hotel);
+        $Asiento=Asiento::findOrFail($id);
+        return $this->showOne($Asiento);
     }
 
     /**
@@ -198,11 +208,11 @@ class HotelController extends ApiController
 
      /**
      * @SWG\Put(
-     *   path="/hotels/{hotel_id}",
+     *   path="/Asientos/{Asiento_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Update hotel",
+     *   summary="Update Asiento",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -211,7 +221,7 @@ class HotelController extends ApiController
      *         description="Bearer {token_access}",
      *    ),
      *		  @SWG\Parameter(
-     *          name="hotel_id",
+     *          name="Asiento_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -222,21 +232,24 @@ class HotelController extends ApiController
      *          in="body",
      *          required=false,
      *          @SWG\Schema(
-     *            @SWG\Property(property="nombre", type="string", example="nombre apellido"),
-     *            @SWG\Property(property="NIF", type="string", example="12345678Z"),
-     *            @SWG\Property(property="Localidad_id", type="integer", example=1),
+     *            @SWG\Property(property="numero", type="string", example="120"),
+     *            @SWG\Property(property="Trayecto_id", type="integer", example=1),
+     *            @SWG\Property(property="tipo_Asientos", type="integer", example=1),
      *          ),
      *      ),
      *   @SWG\Response(
-     *      response=201,
-     *      description="Update successful operation",
-     *      @SWG\Schema(ref="#definitions/Hotel")
+     *      response=200,
+     *      description="Create successful operation",
+     *      @SWG\Schema(ref="#definitions/Asiento")
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
      *      @SWG\Schema(ref="#definitions/Errors403")
      *   ),
      *   @SWG\Response(response=404, description="Not Found Exception",
      *      @SWG\Schema(ref="#definitions/Errors404")
+     *   ),
+     *   @SWG\Response(response=406, description="Not Aceptable",
+     *      @SWG\Schema(ref="#definitions/Errors406")
      *   ),
      *   @SWG\Response(
      *      response=500,
@@ -248,33 +261,48 @@ class HotelController extends ApiController
      **/
     public function update(Request $request, $id)
     {
-      $hotel=Hotel::findOrFail($id);
-      $rules=[
-        'NIF'=> 'min:8',
-        'nombre'=> 'min:2',
-        'Localidad_id' => 'exists:localidads,id',
-      ];
-      $this->validate($request,$rules);
+        $Asiento=Asiento::findOrFail($id);
+        $rules=[
+          'Trayecto_id'=> 'exists:Trayectos,id',
+          'tipo_Asientos'=> 'exists:tipo_Asientos,id',
+        ];
 
-      if($request->has('NIF')){
-          $hotel->NIF=$request->NIF;
-      }
+        $this->validate($request,$rules);
 
-      if($request->has('nombre')){
-          $hotel->nombre=$request->nombre;
-      }
 
-      if($request->has('Localidad_id')){
-          $hotel->Localidad_id=$request->Localidad_id;
-      }
+        if($request->has('numero')){
+          $Asiento->numero=$request->numero;
+        }
 
-      if(!$hotel->isDirty()){
-         return $this->errorResponse('Se debe especificar al menos un valor diferente para actualizar',409);
-      }
+        if($request->has('Trayecto_id') && $request->has('tipo_Asiento_id')){
+            $tipohab=TipoAsiento::findOrFail($request->tipo_asiento_id);
+            if($tipohab->Trayecto_id!=$request->Trayecto_id){
+               return $this->errorResponse('El id de Trayecto del tipo de habitación debe ser mismo Trayecto que se desea crear la habitación',401);
+            }
+            $Asiento->Trayecto_id=$request->Trayecto_id;
+            $Asiento->tipo_asiento_id=$request->tipo_asiento_id;
+        }else if($request->has('Trayecto_id') && !$request->has('tipo_Asiento_id')){
 
-      $hotel->save();
-      return $this->showOne($hotel);
+            $tipohab=TipoAsiento::findOrFail($Asiento->tipo_asiento_id);
+            if($tipohab->Trayecto_id!=$request->Trayecto_id){
+               return $this->errorResponse('El id de Trayecto del tipo de habitación debe ser mismo Trayecto que se desea crear la habitación',401);
+            }
+            //este caso no pasara nunca con configuracion actual
+            $Asiento->Trayecto_id=$request->Trayecto_id;
+        }else if(!$request->has('Trayecto_id') && $request->has('tipo_Asiento_id')){
+            $tipohab=TipoAsiento::findOrFail($request->tipo_asiento_id);
+            if($tipohab->Trayecto_id!=$Asiento->Trayecto_id){
+               return $this->errorResponse('El id de Trayecto del tipo de habitación debe ser mismo Trayecto que se desea crear la habitación',401);
+            }
+            $Asiento->tipo_Asiento_id=$request->tipo_asiento_id;
+        }
 
+        if(!$Asiento->isDirty()){
+           return $this->errorResponse('Se debe especificar al menos un valor diferente para actualizar',409);
+        }
+
+        $Asiento->save();
+        return $this->showOne($Asiento);
     }
 
     /**
@@ -286,13 +314,13 @@ class HotelController extends ApiController
 
      /**
      * @SWG\Delete(
-     *   path="/hotels/{hotel_id}",
+     *   path="/Asientos/{Asiento_id}",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Delete hotel",
+     *   summary="Delete Asiento",
      *		  @SWG\Parameter(
-     *          name="hotel_id",
+     *          name="Asiento_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -308,7 +336,7 @@ class HotelController extends ApiController
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Hotel")
+     *         @SWG\Items(ref="#definitions/Asiento")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -325,8 +353,8 @@ class HotelController extends ApiController
      **/
     public function destroy($id)
     {
-        $hotel=Hotel::findOrFail($id);
-        $hotel->delete();
-        return $this->showOne($hotel);
+      $Asiento=Asiento::findOrFail($id);
+      $Asiento->delete();
+      return $this->showOne($Asiento);
     }
 }

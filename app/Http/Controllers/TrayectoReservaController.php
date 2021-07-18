@@ -4,17 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Habitacion;
-use App\TipoHabitacion;
+use App\Trayecto;
+use App\Seguro;
 
-class HabitacionAlojamientoController extends ApiController
+class TrayectoReservaController extends ApiController
 {
+  public function __construct(){
+    $this->middleware('client.credentials');
 
-    public function __construct(){
-      $this->middleware('client.credentials');
-
-    }
-    /**
+  }
+  /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -22,11 +21,18 @@ class HabitacionAlojamientoController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/habitacions/{habitacion_id}/alojamientos",
+     *   path="/Trayectos/{Trayecto_id}/reservas",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Habitacion table Alojamientos",
+     *   summary="Get Trayectoes  reservas",
+     *		  @SWG\Parameter(
+     *          name="Trayecto_id",
+     *          in="path",
+     *          required=true,
+     *          type="string",
+     *          description="un numero id"
+     *      ),
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -34,17 +40,10 @@ class HabitacionAlojamientoController extends ApiController
      *         type="string",
      *         description="Bearer {token_access}",
      *    ),
-     *		  @SWG\Parameter(
-     *          name="habitacion_id",
-     *          in="path",
-     *          required=true,
-     *          type="string",
-     *          description="un numero id"
-     *      ),
      *   @SWG\Response(response=200, description="successful operation",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref="#definitions/Alojamiento")
+     *         @SWG\Items(ref="#definitions/Reservas")
      *     )
      *   ),
      *   @SWG\Response(response=403, description="Autorization Exception",
@@ -59,11 +58,15 @@ class HabitacionAlojamientoController extends ApiController
      *)
      *
      **/
-    public function index(Habitacion $habitacion)
+    public function index(Trayecto $Trayecto)
     {
-      $tipohab=TipoHabitacion::findOrFail($habitacion->tipo_habitacion_id);
-      $alojamientos=$tipohab->alojamientos;
-      return $this->showAll($alojamientos);
+        $asientoes=$Trayecto->asientos;
+        $previo=collect();
+        foreach($asientoes as $asiento){
+          $previo->push($asiento->reservas);
+        }
+        $reservas=$previo->collapse();
+        return $this->showAll($reservas);
     }
 
     /**

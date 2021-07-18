@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Habitacion;
-use App\Hotel;
+use App\Asiento;
+use App\Trayecto;
 use Carbon\Carbon;
 
-class HabitacionFechasController extends ApiController
+class AsientoFechaController extends ApiController
 {
 
     public function __construct(){
@@ -24,11 +24,11 @@ class HabitacionFechasController extends ApiController
 
           /**
           * @SWG\Get(
-          *   path="/habitacions/{habitacion_id}/fechas",
+          *   path="/Asientos/{Asiento_id}/fechas",
           *   security={
           *     {"passport": {}},
           *   },
-          *   summary="Get Habitacion table All Fechas",
+          *   summary="Get Asiento table All Fechas",
           *     @SWG\Parameter(
           *         name="Autorization",
           *         in="header",
@@ -37,7 +37,7 @@ class HabitacionFechasController extends ApiController
           *         description="Bearer {token_access}",
           *    ),
           *		  @SWG\Parameter(
-          *          name="habitacion_id",
+          *          name="Asiento_id",
           *          in="path",
           *          required=true,
           *          type="string",
@@ -62,11 +62,11 @@ class HabitacionFechasController extends ApiController
           *
           **/
 
-    public function index(Habitacion $habitacion)
+    public function index(Asiento $Asiento)
     {
-        $hotel=Hotel::findOrFail($habitacion->Hotel_id);
-        $fechas=$hotel->fechas;
-        $reservas=$habitacion->reservas;
+        $Trayecto=Trayecto::findOrFail($Asiento->Trayecto_id);
+        $fechas=$Trayecto->fechas;
+        $reservas=$Asiento->reservas;
         $previos=collect();
 
         foreach ($reservas as $reserva) {
@@ -161,7 +161,7 @@ class HabitacionFechasController extends ApiController
 
 
     /**
-     * En funcion de rango dice que dias esta libre una habitacion
+     * En funcion de rango dice que dias esta libre una Asiento
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -170,11 +170,11 @@ class HabitacionFechasController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/habitacions/{habitacion_id}/fechas/libre",
+     *   path="/Asientos/{Asiento_id}/fechas/libre",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Habitacion table All Fechas",
+     *   summary="Get Asiento table All Fechas",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -183,7 +183,7 @@ class HabitacionFechasController extends ApiController
      *         description="Bearer {token_access}",
      *    ),
      *		  @SWG\Parameter(
-     *          name="habitacion_id",
+     *          name="Asiento_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -223,7 +223,7 @@ class HabitacionFechasController extends ApiController
      **/
     public function libre(Request $request,$id)
     {
-      $habitacion=Habitacion::findOrFail($id);
+      $Asiento=Asiento::findOrFail($id);
       $rules=[
         'fecha_desde'=> 'required',
         'fecha_hasta'=> 'required',
@@ -250,9 +250,9 @@ class HabitacionFechasController extends ApiController
          return $this->errorResponse("fecha_desde no puede ser mayor fecha_hasta",404);
       }
 
-      $hotel=Hotel::findOrFail($habitacion->Hotel_id);
-      $fechas=$hotel->fechas->whereBetween('abierto',[$fecha_desde,$fecha_hasta]);
-      $reservas=$habitacion->reservas;
+      $Trayecto=Trayecto::findOrFail($Asiento->Trayecto_id);
+      $fechas=$Trayecto->fechas->whereBetween('abierto',[$fecha_desde,$fecha_hasta]);
+      $reservas=$Asiento->reservas;
       $previos=collect();
 
       foreach ($reservas as $reserva) {
@@ -281,7 +281,7 @@ class HabitacionFechasController extends ApiController
     }
 
     /**
-     * En funcion de rango dice que dias esta libre una habitacion
+     * En funcion de rango dice que dias esta libre una Asiento
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -290,11 +290,11 @@ class HabitacionFechasController extends ApiController
 
      /**
      * @SWG\Get(
-     *   path="/habitacions/{habitacion_id}/fechas/ocupado",
+     *   path="/Asientos/{Asiento_id}/fechas/ocupado",
      *   security={
      *     {"passport": {}},
      *   },
-     *   summary="Get Habitacion table All Fechas",
+     *   summary="Get Asiento table All Fechas",
      *     @SWG\Parameter(
      *         name="Autorization",
      *         in="header",
@@ -303,7 +303,7 @@ class HabitacionFechasController extends ApiController
      *         description="Bearer {token_access}",
      *    ),
      *		  @SWG\Parameter(
-     *          name="habitacion_id",
+     *          name="Asiento_id",
      *          in="path",
      *          required=true,
      *          type="string",
@@ -343,7 +343,7 @@ class HabitacionFechasController extends ApiController
      **/
     public function ocupado(Request $request,$id)
     {
-      $habitacion=Habitacion::findOrFail($id);
+      $Asiento=Asiento::findOrFail($id);
       $rules=[
         'fecha_desde'=> 'required',
         'fecha_hasta'=> 'required',
@@ -370,9 +370,9 @@ class HabitacionFechasController extends ApiController
          return $this->errorResponse("fecha_desde no puede ser mayor fecha_hasta",404);
       }
 
-      $hotel=Hotel::findOrFail($habitacion->Hotel_id);
-      $fechas=$hotel->fechas->whereBetween('abierto',[$fecha_desde,$fecha_hasta]);
-      $reservas=$habitacion->reservas;
+      $Trayecto=Trayecto::findOrFail($Asiento->Trayecto_id);
+      $fechas=$Trayecto->fechas->whereBetween('abierto',[$fecha_desde,$fecha_hasta]);
+      $reservas=$Asiento->reservas;
       $previos=collect();
 
       foreach ($reservas as $reserva) {
