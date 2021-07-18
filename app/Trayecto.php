@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Seguro;
 use App\TipoAsiento;
-use App\Transformers\TrajectoTransformer;
+use App\Transformers\TrayectoTransformer;
 
 class Trayecto extends Model
 {

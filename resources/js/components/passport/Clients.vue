@@ -285,7 +285,7 @@
              * Get all of the OAuth clients for the user.
              */
             getClients() {
-                axios.get('/apirest-hoteles/public/oauth/clients')
+                axios.get('/apirest-viajes/public/oauth/clients')
                         .then(response => {
                             this.clients = response.data;
                         });
@@ -303,7 +303,7 @@
              */
             store() {
                 this.persistClient(
-                    'post', '/apirest-hoteles/public/oauth/clients',
+                    'post', '/apirest-viajes/public/oauth/clients',
                     this.createForm, '#modal-create-client'
                 );
             },
@@ -324,7 +324,7 @@
              */
             update() {
                 this.persistClient(
-                    'put', '/apirest-hoteles/public/oauth/clients/' + this.editForm.id,
+                    'put', '/apirest-viajes/public/oauth/clients/' + this.editForm.id,
                     this.editForm, '#modal-edit-client'
                 );
             },
@@ -358,7 +358,7 @@
              * Destroy the given client.
              */
             destroy(client) {
-                axios.delete('/apirest-hoteles/public/oauth/clients/' + client.id)
+                axios.delete('/apirest-viajes/public/oauth/clients/' + client.id)
                         .then(response => {
                             this.getClients();
                         });

@@ -44,8 +44,8 @@ class LocalidadTransformer extends TransformerAbstract
                   'href'=> route('localidads.show',$localidad->id),
               ],
               [
-                  'rel'=>'pais.hotels',
-                  'href'=> route('localidads.hotels.index',$localidad->id),
+                  'rel'=>'pais.trayectos',
+                  'href'=> route('localidads.trayectos.index',$localidad->id),
               ],
 
             ],

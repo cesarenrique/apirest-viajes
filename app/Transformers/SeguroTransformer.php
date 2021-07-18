@@ -3,8 +3,8 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use App\Pension;
-class PensionTransformer extends TransformerAbstract
+use App\Seguro;
+class SeguroTransformer extends TransformerAbstract
 {
     /**
      * List of resources to automatically include
@@ -29,19 +29,19 @@ class PensionTransformer extends TransformerAbstract
      *
      * @return array
      */
-    public function transform(Pension $pension)
+    public function transform(Seguro $Seguro)
     {
         return [
-          'identificador'=>(int)$pension->id,
-          'tipo'=> (string)$pension->tipo,
-          'HotelIdentificador'=>(int)$pension->Hotel_id,
-          'fechaCreacion'=>(string)$pension->created_at,
-          'fechaActualizacion'=>(string)$pension->updated_at,
-          'fechaEliminacion'=>isset($pension->deleted_at) ?(string)$pension->deteted_at: null,
+          'identificador'=>(int)$Seguro->id,
+          'tipo'=> (string)$Seguro->tipo,
+          'TrayectoIdentificador'=>(int)$Seguro->Hotel_id,
+          'fechaCreacion'=>(string)$Seguro->created_at,
+          'fechaActualizacion'=>(string)$Seguro->updated_at,
+          'fechaEliminacion'=>isset($Seguro->deleted_at) ?(string)$Seguro->deteted_at: null,
           'links'=>[
               [
                   'rel'=>'self',
-                  'href'=> route('pensions.show',$pension->id),
+                  'href'=> route('seguros.show',$Seguro->id),
               ],
             ],
         ];

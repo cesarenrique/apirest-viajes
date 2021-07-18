@@ -87,7 +87,7 @@
              * Get all of the authorized tokens for the user.
              */
             getTokens() {
-                axios.get('/apirest-hoteles/public/oauth/tokens')
+                axios.get('/apirest-viajes/public/oauth/tokens')
                         .then(response => {
                             this.tokens = response.data;
                         });
@@ -97,7 +97,7 @@
              * Revoke the given token.
              */
             revoke(token) {
-                axios.delete('/apirest-hoteles/public/oauth/tokens/' + token.id)
+                axios.delete('/apirest-viajes/public/oauth/tokens/' + token.id)
                         .then(response => {
                             this.getTokens();
                         });

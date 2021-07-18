@@ -44,8 +44,8 @@ class PaisTransformer extends TransformerAbstract
                   'href'=> route('pais.show',$pais->id),
               ],
               [
-                  'rel'=>'pais.hotels',
-                  'href'=> route('pais.hotels.index',$pais->id),
+                  'rel'=>'pais.trayectos',
+                  'href'=> route('pais.trayectos.index',$pais->id),
               ],
               [
                   'rel'=>'pais.provincias',

@@ -1997,7 +1997,7 @@ __webpack_require__.r(__webpack_exports__);
     getTokens: function getTokens() {
       var _this = this;
 
-      axios.get('/apirest-hoteles/public/oauth/tokens').then(function (response) {
+      axios.get('/apirest-viajes/public/oauth/tokens').then(function (response) {
         _this.tokens = response.data;
       });
     },
@@ -2008,7 +2008,7 @@ __webpack_require__.r(__webpack_exports__);
     revoke: function revoke(token) {
       var _this2 = this;
 
-      axios["delete"]('/apirest-hoteles/public/oauth/tokens/' + token.id).then(function (response) {
+      axios["delete"]('/apirest-viajes/public/oauth/tokens/' + token.id).then(function (response) {
         _this2.getTokens();
       });
     }
@@ -2311,7 +2311,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     getClients: function getClients() {
       var _this = this;
 
-      axios.get('/apirest-hoteles/public/oauth/clients').then(function (response) {
+      axios.get('/apirest-viajes/public/oauth/clients').then(function (response) {
         _this.clients = response.data;
       });
     },
@@ -2327,7 +2327,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      * Create a new OAuth client for the user.
      */
     store: function store() {
-      this.persistClient('post', '/apirest-hoteles/public/oauth/clients', this.createForm, '#modal-create-client');
+      this.persistClient('post', '/apirest-viajes/public/oauth/clients', this.createForm, '#modal-create-client');
     },
 
     /**
@@ -2344,7 +2344,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      * Update the client being edited.
      */
     update: function update() {
-      this.persistClient('put', '/apirest-hoteles/public/oauth/clients/' + this.editForm.id, this.editForm, '#modal-edit-client');
+      this.persistClient('put', '/apirest-viajes/public/oauth/clients/' + this.editForm.id, this.editForm, '#modal-edit-client');
     },
 
     /**
@@ -2376,7 +2376,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     destroy: function destroy(client) {
       var _this3 = this;
 
-      axios["delete"]('/apirest-hoteles/public/oauth/clients/' + client.id).then(function (response) {
+      axios["delete"]('/apirest-viajes/public/oauth/clients/' + client.id).then(function (response) {
         _this3.getClients();
       });
     }
@@ -2600,7 +2600,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     getTokens: function getTokens() {
       var _this = this;
 
-      axios.get('/apirest-hoteles/public/oauth/personal-access-tokens').then(function (response) {
+      axios.get('/apirest-viajes/public/oauth/personal-access-tokens').then(function (response) {
         _this.tokens = response.data;
       });
     },
@@ -2611,7 +2611,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     getScopes: function getScopes() {
       var _this2 = this;
 
-      axios.get('/apirest-hoteles/public/oauth/scopes').then(function (response) {
+      axios.get('/apirest-viajes/public/oauth/scopes').then(function (response) {
         _this2.scopes = response.data;
       });
     },
@@ -2631,7 +2631,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       this.accessToken = null;
       this.form.errors = [];
-      axios.post('/apirest-hoteles/public/oauth/personal-access-tokens', this.form).then(function (response) {
+      axios.post('/apirest-viajes/public/oauth/personal-access-tokens', this.form).then(function (response) {
         _this3.form.name = '';
         _this3.form.scopes = [];
         _this3.form.errors = [];
@@ -2683,7 +2683,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     revoke: function revoke(token) {
       var _this4 = this;
 
-      axios["delete"]('/apirest-hoteles/public/oauth/personal-access-tokens/' + token.id).then(function (response) {
+      axios["delete"]('/apirest-viajes/public/oauth/personal-access-tokens/' + token.id).then(function (response) {
         _this4.getTokens();
       });
     }
@@ -52789,8 +52789,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Library/WebServer/Documents/apirest-hoteles/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Library/WebServer/Documents/apirest-hoteles/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Library/WebServer/Documents/apirest-viajes/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Library/WebServer/Documents/apirest-viajes/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
