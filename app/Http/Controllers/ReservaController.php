@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Reserva;
 use App\Fecha;
-use App\Alojamiento;
-use App\Habitacion;
-use App\Pension;
+use App\Precio;
+use App\Asiento;
+use App\Seguro;
 
 class ReservaController extends ApiController
 {
@@ -97,8 +97,8 @@ class ReservaController extends ApiController
      *          @SWG\Schema(
      *            @SWG\Property(property="tipo", type="string", example="Desayuno delux"),
      *            @SWG\Property(property="Fecha_id", type="integer", example=1),
-     *            @SWG\Property(property="Habitacion_id", type="integer", example=1),
-     *            @SWG\Property(property="Alojamiento_id", type="integer", example=1),
+     *            @SWG\Property(property="Asiento_id", type="integer", example=1),
+     *            @SWG\Property(property="Precio_id", type="integer", example=1),
      *            @SWG\Property(property="Cliente_id", type="integer", example=1),
      *            @SWG\Property(property="Tarjeta", type="string", example="1231331313321"),
      *          ),
@@ -123,8 +123,8 @@ class ReservaController extends ApiController
     {
       $rules=[
         'Fecha_id'=> 'required|exists:fechas,id',
-        'Habitacion_id'=> 'required|exists:habitacions,id',
-        'Alojamiento_id' => 'required|exists:alojamientos,id',
+        'Asiento_id'=> 'required|exists:Asientos,id',
+        'Precio_id' => 'required|exists:Precios,id',
         'Cliente_id'=> 'required|exists:clientes,id',
         'Tarjeta' => "min:15",
       ];
@@ -134,22 +134,22 @@ class ReservaController extends ApiController
       $campos['estado']=RESERVA::PAGADO_TOTALMENTE;
 
       $fecha=Fecha::findOrFail($request->Fecha_id);
-      $habitacion=Habitacion::findOrFail($request->Habitacion_id);
-      $alojamiento=Alojamiento::findOrFail($request->Alojamiento_id);
-      $pension=Pension::findOrFail($alojamiento->Pension_id);
-      if(!($fecha->Hotel_id==$habitacion->Hotel_id && $fecha->Hotel_id==$pension->Hotel_id)){
-        return $this->errorResponse('Fecha_id, Habitacion_id, Alojamiento_id deben ser del mismo hotel',405);
+      $Asiento=Asiento::findOrFail($request->Asiento_id);
+      $Precio=Precio::findOrFail($request->Precio_id);
+      $Seguro=Seguro::findOrFail($Precio->Seguro_id);
+      if(!($fecha->Hotel_id==$Asiento->Hotel_id && $fecha->Hotel_id==$Seguro->Hotel_id)){
+        return $this->errorResponse('Fecha_id, Asiento_id, Precio_id deben ser del mismo hotel',405);
       }
 
-      $campos['pagado']=$alojamiento->precio;
+      $campos['pagado']=$Precio->precio;
 
       DB::transaction(function () use($campos) {
           Reserva::create($campos);
 
       });
       $reserva_previo=Reserva::where('Cliente_id',$request->Cliente_id)
-       ->where('Alojamiento_id',$request->Alojamiento_id)
-       ->where('Habitacion_id',$request->Habitacion_id)
+       ->where('Precio_id',$request->Precio_id)
+       ->where('Asiento_id',$request->Asiento_id)
        ->where('Fecha_id',$request->Fecha_id)->get();
 
        if($reserva_previo->isEmpty()){
@@ -258,8 +258,8 @@ class ReservaController extends ApiController
      *          @SWG\Schema(
      *            @SWG\Property(property="tipo", type="string", example="Desayuno delux"),
      *            @SWG\Property(property="Fecha_id", type="integer", example=1),
-     *            @SWG\Property(property="Habitacion_id", type="integer", example=1),
-     *            @SWG\Property(property="Alojamiento_id", type="integer", example=1),
+     *            @SWG\Property(property="Asiento_id", type="integer", example=1),
+     *            @SWG\Property(property="Precio_id", type="integer", example=1),
      *            @SWG\Property(property="Cliente_id", type="integer", example=1),
      *            @SWG\Property(property="Tarjeta", type="string", example="1231331313321"),
      *          ),

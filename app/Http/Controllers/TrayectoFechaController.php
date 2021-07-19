@@ -7,6 +7,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\DB;
 use App\Trayecto;
 use DateTime;
+use App\Fecha;
 
 class TrayectoFechaController extends ApiController
 {
@@ -199,5 +200,30 @@ class TrayectoFechaController extends ApiController
         }
         DB::statement("delete from fechas f where f.Trayecto_id=".$Trayecto->id." and  '".$fecha_desde."'<=f.abierto and f.abierto<='". $fecha_hasta. "'");
         return response()->json(['data'=>'dias que Trayecto esta cerrado actualizada'],200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function abierto(Request $request,$id)
+    {
+        $Trayecto=Trayecto::findOrFail($id);
+        $rules=[
+          'fecha_desde'=> 'required',
+        ];
+
+        $this->validate($request,$rules);
+        $fecha_desde=(string)$request->fecha_desde;
+        if(!(preg_match_all('/^(\d{4})(-)(0[1-9]|1[0-2])(-)([0-2][0-9]|3[0-1])$/',$fecha_desde))){
+           return $this->errorResponse("la fecha tiene que ser formato yyyy-MM-dd y una fecha valida",401);
+        }
+
+        $fecha=Fecha::where('Trayecto_id',$Trayecto->id)->where('abierto',$fecha_desde)->firstOrFail();
+
+        return $this->showOne($fecha);
+
     }
 }

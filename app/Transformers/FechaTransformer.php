@@ -35,11 +35,11 @@ class FechaTransformer extends TransformerAbstract
         return [
           'identificador'=>(int)$fecha->id,
           'fecha'=> (string)$fecha->abierto,
-          'HotelIdentificador'=>(int)$fecha->Hotel_id,
+          'TrayectoIdentificador'=>(int)$fecha->Trayecto_id,
           'fechaCreacion'=>(string)$fecha->created_at,
           'fechaActualizacion'=>(string)$fecha->updated_at,
           'fechaEliminacion'=>isset($fecha->deleted_at) ?(string)$fecha->deteted_at: null,
-          
+
         ];
     }
 }

@@ -49,6 +49,7 @@ Route::get('trayectos/{Trayecto}/precios/generar','TrayectoPrecioController@gene
 Route::resource('trayectos.precios',TrayectoPrecioController::class,['except'=>['create','edit','store','update','destroy']]);
 Route::get('trayectos/{Trayecto}/fechas/abrir','TrayectoFechaController@abrir')->name('Trayectos.fechas.abrir');
 Route::get('trayectos/{Trayecto}/fechas/cerrar','TrayectoFechaController@cerrar')->name('Trayectos.fechas.cerrar');
+Route::get('trayectos/{Trayecto}/fechas/abierto','TrayectoFechaController@abierto')->name('Trayectos.fechas.abierto');
 Route::resource('trayectos.fechas',TrayectoFechaController::class,['except'=>['create','edit','store','update','destroy']]);
 Route::get('clientes/nif','ClienteController@lookforNIF')->name('cliente.nif');
 Route::resource('clientes',ClienteController::class,['except'=>['create','edit']]);
