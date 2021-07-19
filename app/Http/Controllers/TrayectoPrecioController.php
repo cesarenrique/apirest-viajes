@@ -7,6 +7,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\DB;
 use App\Trayecto;
 use App\Precio;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class TrayectoPrecioController extends ApiController
@@ -180,7 +181,7 @@ class TrayectoPrecioController extends ApiController
     public function descriptivo($Trayecto_id){
        $Trayecto=Trayecto::findOrFail($Trayecto_id);
        $Precios=DB::select("select a.id 'identificador', precio 'precio', p2.tipo 'Seguro',
-          th.tipo 'tipoHabitacion', t.tipo 'temporada', t.fecha_desde, t.fecha_hasta
+          th.tipo 'tipoAsiento', t.tipo 'temporada', t.fecha_desde, t.fecha_hasta
           from Precios a, Seguros p2 ,tipo_asientos th ,temporadas t
           where  p2.Trayecto_id=th.Trayecto_id  and p2.Trayecto_id =t.Trayecto_id
           and a.Seguro_id =p2.id
@@ -189,6 +190,41 @@ class TrayectoPrecioController extends ApiController
        $collection = new Collection();
        foreach($Precios as $Precio){
           $collection->push($Precio);
+       }
+       return $this->showAll2($collection);
+    }
+
+    public function asientos(Request $request,$Trayecto_id,$precio_id){
+
+      $rules=[
+        'fecha_desde'=> 'required',
+      ];
+
+      $this->validate($request,$rules);
+      $fecha_desde=(string)$request->fecha_desde;
+      if(!(preg_match_all('/^(\d{4})(-)(0[1-9]|1[0-2])(-)([0-2][0-9]|3[0-1])$/',$fecha_desde))){
+         return $this->errorResponse("la fecha tiene que ser formato yyyy-MM-dd y una fecha valida",401);
+      }
+
+      $fecha_desde_porcion=explode("-",$fecha_desde);
+
+      $fechaDesde=Carbon::createFromDate($fecha_desde_porcion[0],$fecha_desde_porcion[1],$fecha_desde_porcion[2]);
+
+       $Trayecto=Trayecto::findOrFail($Trayecto_id);
+       $precios=Precio::findOrFail($precio_id);
+       $habitaciones=DB::select("select a.id 'identificador',a.numero 'numero'  from asientos a ,fechas f, tipo_asientos ta
+        where  a.Trayecto_id = f.Trayecto_id and a.Trayecto_id = ta.Trayecto_id and a.tipo_asiento_id=ta.id and abierto='".date_format($fechaDesde,'Y-m-d')."'and
+        a.Trayecto_id=".$Trayecto_id." and ta.id=".$precios->tipo_asiento_id." and a.id not in(
+        select a2.id from asientos a2, reservas r2 ,fechas f2, tipo_asientos ta2
+        where r2.Asiento_id =a2.id and r2.Fecha_id =f2.id
+        and a2.Trayecto_id = f2.Trayecto_id
+        and a2.Trayecto_id = ta2.Trayecto_id
+        and a2.tipo_asiento_id=ta2.id
+        and f2.abierto='".date_format($fechaDesde,'Y-m-d')."'
+        and a2.Trayecto_id=".$Trayecto_id." and ta2.id=".$precios->tipo_asiento_id.")" );
+       $collection = new Collection();
+       foreach($habitaciones as $habitacion){
+          $collection->push($habitacion);
        }
        return $this->showAll2($collection);
     }

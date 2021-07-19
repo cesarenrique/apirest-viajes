@@ -22,6 +22,7 @@ Route::resource('pais',PaisController::class,['only'=>['index','show']]);
 Route::resource('pais.provincias',PaisProvinciaController::class,['only'=>['index']]);
 Route::resource('provincias',ProvinciaController::class,['only'=>['index','show']]);
 Route::resource('provincias.localidads',ProvinciaLocalidadController::class,['only'=>['index']]);
+Route::get('trayectos/{trayecto}/descriptivo','TrayectoController@descriptivo')->name('trayectos.descriptivo');
 Route::resource('localidads',LocalidadController::class,['only'=>['index','show']]);
 Route::get('users/verify/{token}','UserController@verify')->name('verify');
 Route::resource('users',UserController::class,['except'=>['create','edit']]);
@@ -31,6 +32,7 @@ Route::resource('tipo_asientos',TipoAsientoController::class,['except'=>['create
 Route::resource('trayectos.seguros',TrayectoSeguroController::class,['only'=>['index']]);
 Route::resource('pais.trayectos',PaisTrayectoController::class,['only'=>['index']]);
 Route::resource('provincias.trayectos',ProvinciaTrayectoController::class,['only'=>['index']]);
+Route::get('localidads/{Localidad}/trayectos/descriptivo','LocalidadTrayectoController@descriptivo')->name('localidads.trayectos.descriptivo');
 Route::resource('localidads.trayectos',LocalidadTrayectoController::class,['only'=>['index']]);
 Route::resource('trayectos.tipo_asientos',TrayectoTipoAsientoController::class,['only'=>['index']]);
 Route::resource('asientos',AsientoController::class,['except'=>['create','edit']]);
@@ -39,6 +41,7 @@ Route::resource('tipo_asientos.asientos',TipoAsientoAsientoController::class,['o
 Route::get('temporadas/{Trayecto}/pertenece','TemporadaController@pertenece')->name('temporada.pertenece');
 Route::get('temporadas/{Trayecto}/puedeReservarse','TemporadaController@puedeReservarse')->name('temporada.puedeReservarse');
 Route::resource('temporadas',TemporadaController::class,['except'=>['create','edit','update']]);
+Route::get('trayectos/{Trayecto}/precios/{precio}/asientos','TrayectoPrecioController@asientos')->name('trayectos.precios.asientos');
 Route::get('trayectos/{Trayecto}/precios/descriptivo','TrayectoPrecioController@descriptivo')->name('trayectos.precios.descriptivo');
 Route::get('precios/{Precio}/descriptivo','PrecioController@descriptivo')->name('precios.descriptivo');
 Route::resource('precios',PrecioController::class,['except'=>['create','edit','store']]);

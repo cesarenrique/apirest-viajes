@@ -74,6 +74,7 @@ class TrayectoTransformer extends TransformerAbstract
                   'rel'=>'trayectos.precios.generar',
                   'href'=> route('trayectos.precios.generar',$Trayecto->id),
               ],
+
           ],
         ];
     }

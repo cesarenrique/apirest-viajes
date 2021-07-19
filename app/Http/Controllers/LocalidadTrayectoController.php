@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Localidad;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 class LocalidadTrayectoController extends ApiController
 {
 
@@ -127,5 +128,21 @@ class LocalidadTrayectoController extends ApiController
     public function destroy($id)
     {
         //
+    }
+
+    public function descriptivo($id){
+      $localidad=Localidad::findOrFail($id);
+      $descriptivos=DB::select("select t.id 'identificador', l.nombre 'origen', l2.nombre 'destino',
+      t.empresa
+      from trayectos t, localidads l, localidads l2
+      where t.Localidad_id =l.id
+      and t.Localidad_destino_id = l2.id
+      and l.id=".$localidad->id);
+
+      $collection = new Collection();
+      foreach($descriptivos as $descriptivo){
+         $collection->push($descriptivo);
+      }
+      return $this->showAll2($collection);
     }
 }

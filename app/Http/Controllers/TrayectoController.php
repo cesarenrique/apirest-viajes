@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Trayecto;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 class TrayectoController extends ApiController
 {
 
@@ -328,5 +329,21 @@ class TrayectoController extends ApiController
         $Trayecto=Trayecto::findOrFail($id);
         $Trayecto->delete();
         return $this->showOne($Trayecto);
+    }
+
+    public function descriptivo($id){
+      $trayecto=Trayecto::findOrFail($id);
+      $descriptivos=DB::select("select t.id 'identificador', l.nombre 'origen', l2.nombre 'destino',
+      t.empresa
+      from trayectos t, localidads l, localidads l2
+      where t.Localidad_id =l.id
+      and t.Localidad_destino_id = l2.id
+      and t.id=".$trayecto->id);
+      $collection = new Collection();
+      foreach($descriptivos as $descriptivo){
+         $collection->push($descriptivo);
+      }
+      $trayecto2=$collection->first();
+      return $this->showOne2($trayecto2);
     }
 }

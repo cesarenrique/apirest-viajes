@@ -273,7 +273,7 @@ class PrecioController extends ApiController
     public function descriptivo($Precio_id){
 
        $Precio2=Precio::findOrFail($Precio_id);
-       $Precios=DB::select("select a.id 'identificador', precio 'precio', p2.tipo 'seguro',
+       $Precios=DB::select("select a.id 'identificador', precio 'precio', p2.tipo 'Seguro',
           th.tipo 'tipoAsiento', t.tipo 'temporada', t.fecha_desde, t.fecha_hasta
           from Precios a, seguros p2 ,tipo_asientos th ,temporadas t
           where  p2.Trayecto_id=th.Trayecto_id  and p2.Trayecto_id =t.Trayecto_id
